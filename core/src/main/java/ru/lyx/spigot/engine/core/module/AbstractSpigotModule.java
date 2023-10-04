@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngineContext;
 import ru.lyx.spigot.engine.core.context.SpigotContext;
+import ru.lyx.spigot.engine.core.exception.SpigotEngineException;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 
 import java.lang.ref.WeakReference;
@@ -28,5 +29,14 @@ public abstract class AbstractSpigotModule<T extends SpigotContext>
             contextRef = new WeakReference<>(createContext(previousContext));
         }
         return contextRef.get();
+    }
+
+    public final T getContext() {
+        T context = contextRef.get();
+        if (context == null) {
+            throw new SpigotEngineException("Context still not initialized");
+        }
+
+        return context;
     }
 }

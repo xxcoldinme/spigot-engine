@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
+import ru.lyx.spigot.engine.core.metadata.MetadataProperty;
+import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 
 @Getter
@@ -14,11 +16,11 @@ import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 public class ProcessTransaction {
 
     public static ProcessTransaction create(AttachmentContainer<SpigotModuleProcessor<?, ?>> attachmentContainer) {
-        return new ProcessTransaction(attachmentContainer, new Metadata());
+        return new ProcessTransaction(attachmentContainer, SpigotMetadata.create());
     }
 
     private final AttachmentContainer<SpigotModuleProcessor<?, ?>> attachmentContainer;
-    private final Metadata metadata;
+    private final SpigotMetadata metadata;
 
     private LinkedProcessor next;
 
@@ -32,7 +34,7 @@ public class ProcessTransaction {
     }
 
     public ProcessTransaction withMetadata(KeyProperty<?> key, Object value) {
-        metadata.save(key, value);
+        metadata.with(MetadataProperty.of(key, value));
         return this;
     }
 }

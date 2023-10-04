@@ -11,7 +11,7 @@ import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 public interface SpigotModule<T extends SpigotContext>
         extends Keyable<String> {
 
-    AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine, @NotNull T context);
-
     T lookupContext(@NotNull SpigotEngineContext previousContext);
+
+    AttachmentContainer<SpigotModuleProcessor<?, T>> ofProcessors(@NotNull SpigotEngine engine, @NotNull T context);
 }

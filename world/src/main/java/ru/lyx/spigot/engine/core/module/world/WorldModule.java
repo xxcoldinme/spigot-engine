@@ -18,8 +18,8 @@ public class WorldModule extends AbstractSpigotModule<WorldContext> {
         return new WorldModuleFactory();
     }
 
-    private WorldModule() {
-        super(SpigotModuleTypes.WORLD_MANAGEMENTS);
+    WorldModule() {
+        super(SpigotModuleTypes.WORLDS);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class WorldModule extends AbstractSpigotModule<WorldContext> {
     }
 
     @Override
-    public AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine, @NotNull WorldContext context) {
+    public AttachmentContainer<SpigotModuleProcessor<?, WorldContext>> ofProcessors(@NotNull SpigotEngine engine, @NotNull WorldContext context) {
         return AttachmentContainer.of(
                 new ServerWorldsWrappingProcessor()
         );

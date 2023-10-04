@@ -10,8 +10,12 @@ import ru.lyx.spigot.engine.core.key.KeyProperty;
 @RequiredArgsConstructor
 public enum SpigotModuleTypes {
 
-    DATA_SYNC(KeyProperty.of("#_DATA_SYNC")),
-    WORLD_MANAGEMENTS(KeyProperty.of("#_WORLD_MANAGEMENTS")),
+    COMMANDS(KeyProperty.of("#_COMMANDS")),
+    ENTITIES(KeyProperty.of("#_ENTITIES")),
+    EVENTS(KeyProperty.of("#_EVENTS")),
+    CRAFTING_RECIPES(KeyProperty.of("#_CRAFTING_RECIPES")),
+    SYNC_SERVERS(KeyProperty.of("#_SYNC_SERVERS")),
+    WORLDS(KeyProperty.of("#_WORLDS")),
     ;
 
     private final KeyProperty<String> keyID;

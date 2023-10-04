@@ -10,11 +10,6 @@ import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
 public class SyncModuleFactory implements SpigotModuleFactory<SyncModule> {
 
     @Override
-    public KeyProperty<String> getKey() {
-        return SpigotModuleTypes.DATA_SYNC.getKeyID();
-    }
-
-    @Override
     public SyncModule create() {
         return new SyncModule();
     }

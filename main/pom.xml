@@ -24,9 +24,34 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <groupId>ru.lyx</groupId>
+            <artifactId>spigot-engine-command</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.lyx</groupId>
+            <artifactId>spigot-engine-entity</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.lyx</groupId>
+            <artifactId>spigot-engine-event</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.lyx</groupId>
+            <artifactId>spigot-engine-recipe</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.lyx</groupId>
+            <artifactId>spigot-engine-sync</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.lyx</groupId>
+            <artifactId>spigot-engine-world</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

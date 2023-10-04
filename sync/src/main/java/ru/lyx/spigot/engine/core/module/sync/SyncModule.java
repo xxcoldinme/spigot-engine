@@ -1,7 +1,5 @@
 package ru.lyx.spigot.engine.core.module.sync;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngineContext;
 import ru.lyx.spigot.engine.core.SpigotEngine;
@@ -22,8 +20,8 @@ public class SyncModule extends AbstractSpigotModule<SyncContext> {
         return new SyncModuleFactory();
     }
 
-    private SyncModule() {
-        super(SpigotModuleTypes.DATA_SYNC);
+    SyncModule() {
+        super(SpigotModuleTypes.SYNC_SERVERS);
     }
 
     @Override
@@ -32,7 +30,7 @@ public class SyncModule extends AbstractSpigotModule<SyncContext> {
     }
 
     @Override
-    public AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine, @NotNull SyncContext context) {
+    public AttachmentContainer<SpigotModuleProcessor<?, SyncContext>> ofProcessors(@NotNull SpigotEngine engine, @NotNull SyncContext context) {
         return AttachmentContainer.of(
                 new SocketConnectionOpenProcessor(new ConnectionBootstrap()),
                 new SocketConnectionStableProcessor()

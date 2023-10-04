@@ -13,4 +13,12 @@ public class WrappedWorld {
 
     private final String name;
     private final WorldProperties properties;
+
+    public void clearAllEntities() {
+        // todo
+    }
+
+    public void clearAllDrops() {
+        // todo
+    }
 }

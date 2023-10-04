@@ -9,32 +9,37 @@ import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.SpigotEngineAttachment;
+import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
 import ru.lyx.spigot.engine.core.exception.SpigotEngineException;
-import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
+import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 
 @Getter
 @ToString
 public final class SpigotContainer {
-    private final AttachmentContainer<SpigotEngineAttachment> enablingHooks = AttachmentContainer.empty();
-    private final AttachmentContainer<SpigotEngineAttachment> disablingHooks = AttachmentContainer.empty();
 
-    private final AttachmentContainer<SpigotModuleFactory<?>> modules = AttachmentContainer.empty();
+    private final PluginAttachmentContainer<SpigotEngineAttachment> enablingHooks
+            = PluginAttachmentContainer.empty();
+    private final PluginAttachmentContainer<SpigotEngineAttachment> disablingHooks
+            = PluginAttachmentContainer.empty();
+
+    private final PluginAttachmentContainer<SpigotHandler<?>> handlers = PluginAttachmentContainer.empty();
     private final AttachmentContainer<CommandExecutor> commands = AttachmentContainer.empty();
     private final AttachmentContainer<Listener> listeners = AttachmentContainer.empty();
     private final AttachmentContainer<Recipe> recipes = AttachmentContainer.empty();
     private final AttachmentContainer<World> worlds = AttachmentContainer.empty();
 
-    public void refill(@NotNull SpigotContainer container) {
+    public synchronized void refill(@NotNull SpigotContainer container) {
         enablingHooks.setAll(container.getEnablingHooks());
         disablingHooks.setAll(container.getDisablingHooks());
 
-        modules.setAll(container.getModules());
+        handlers.setAll(container.getHandlers());
         commands.setAll(container.getCommands());
         listeners.setAll(container.getListeners());
         recipes.setAll(container.getRecipes());
         worlds.setAll(container.getWorlds());
     }
 
+    @Override
     public SpigotContainer clone() {
         try {
             return (SpigotContainer) super.clone();

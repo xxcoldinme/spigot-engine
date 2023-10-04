@@ -1,27 +1,26 @@
 package ru.lyx.spigot.engine.core.module;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.UtilityClass;
 import ru.lyx.spigot.engine.core.exception.SpigotEngineException;
-import ru.lyx.spigot.engine.core.key.KeyProperty;
+import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
+import ru.lyx.spigot.engine.core.reflection.InstanceByConstructorHandler;
+import ru.lyx.spigot.engine.core.reflection.ReflectionService;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-@UtilityClass
+@RequiredArgsConstructor
 public class SpigotModuleFactoryHelper {
 
-    private static final KeyProperty<String> UNDEFINED_KEY = KeyProperty.of("#_UNDEFINED");
     private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
 
     private final Map<Class<?>, SpigotModuleFactory<?>> factoriesCacheMap = new HashMap<>();
+    private final ReflectionService reflectionService;
 
     public <T extends SpigotModule<?>> SpigotModuleFactory<T> of(Class<T> cls) {
         return lookupFactory(cls);
@@ -35,11 +34,10 @@ public class SpigotModuleFactoryHelper {
     private <T extends SpigotModule<?>> SpigotModuleFactory<T> createFactory(Class<T> cls) {
         FactoryMethod<T> factory = findFactory(cls);
         if (factory == null) {
-            return new DefaultModuleFactory<>(UNDEFINED_KEY, newConstructorInstance(cls));
+            return (() -> newConstructorInstance(cls));
         }
 
-        T instance = factory.createInstance();
-        return new DefaultModuleFactory<>(instance.getKey(), instance);
+        return (factory::createInstance);
     }
 
     private <T> FactoryMethod<T> findFactory(Class<T> cls) {
@@ -63,19 +61,15 @@ public class SpigotModuleFactoryHelper {
     }
 
     private <T> T newConstructorInstance(Class<T> cls) {
-        try {
-            Constructor<T> constructor = cls.getConstructor();
-            constructor.setAccessible(true);
-
-            return constructor.newInstance();
-        }
-        catch (Exception exception) {
-            return null;
-        }
+        return reflectionService.newInstanceByConstructor(
+                SpigotMetadata.create()
+                        .with(InstanceByConstructorHandler.THROW_EXCEPTION.clone(false))
+                        .with(InstanceByConstructorHandler.TARGET_CLASS.clone(cls))
+        );
     }
 
     @RequiredArgsConstructor
-    private class FactoryMethod<T> {
+    private static class FactoryMethod<T> {
 
         private final MethodHandle handler;
 
@@ -87,20 +81,6 @@ public class SpigotModuleFactoryHelper {
             catch (Throwable ex) {
                 throw new SpigotEngineException(ex);
             }
-        }
-    }
-
-    @RequiredArgsConstructor
-    private static class DefaultModuleFactory<T extends SpigotModule<?>>
-            implements SpigotModuleFactory<T> {
-
-        @Getter
-        private final KeyProperty<String> key;
-        private final T spigotModule;
-
-        @Override
-        public T create() {
-            return spigotModule;
         }
     }
 }

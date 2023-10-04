@@ -5,43 +5,47 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.SpigotEngineContext;
 import ru.lyx.spigot.engine.core.SpigotEngine;
+import ru.lyx.spigot.engine.core.SpigotEngineContext;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.SpigotEngineAttachment;
-import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
+import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 
 public abstract class SpigotBasePlugin
         extends SpigotContextPlugin {
 
     @Override
     public final void registerPlugin(@NotNull SpigotEngine engine, @NotNull SpigotEngineContext context) {
-        final AttachmentContainer<SpigotModuleFactory<?>> modulesContainer = ofModules(engine);
+        final PluginAttachmentContainer<SpigotEngineAttachment> enabledLinkAttachment
+                = PluginAttachmentContainer.<SpigotEngineAttachment>empty()
+                    .add(this, (pl) -> doEnable(engine));
+
+        final PluginAttachmentContainer<SpigotEngineAttachment> disabledLinkAttachment
+                = PluginAttachmentContainer.<SpigotEngineAttachment>empty()
+                    .add(this, (pl) -> doDisable(engine));
+
+        final PluginAttachmentContainer<SpigotHandler<?>> handlersContainer = ofHandlers(engine);
         final AttachmentContainer<Listener> listenersContainer = ofListeners(engine);
         final AttachmentContainer<CommandExecutor> commandsContainer = ofCommands(engine);
         final AttachmentContainer<Recipe> recipesContainer = ofRecipes(engine);
         final AttachmentContainer<World> worldsContainer = ofWorlds(engine);
 
-        final AttachmentContainer<SpigotEngineAttachment> enabledLinkAttachment
-                = AttachmentContainer.of(plugin -> doEnable(engine));
-        final AttachmentContainer<SpigotEngineAttachment> disabledLinkAttachment
-                = AttachmentContainer.of(plugin -> doDisable(engine));
-
         context.openEditSession()
-                .setModules(modulesContainer)
-                .setListeners(listenersContainer)
-                .setCommands(commandsContainer)
-                .setRecipes(recipesContainer)
-                .setWorlds(worldsContainer)
+                .addHandlers(handlersContainer)
+                .addListeners(listenersContainer)
+                .addCommands(commandsContainer)
+                .addRecipes(recipesContainer)
+                .addWorlds(worldsContainer)
 
-                .setEnabledLinks(enabledLinkAttachment)
-                .setDisabledLinks(disabledLinkAttachment)
+                .addEnabledLinks(enabledLinkAttachment)
+                .addDisabledLinks(disabledLinkAttachment)
                 .merge();
     }
 
-    protected AttachmentContainer<SpigotModuleFactory<?>> ofModules(@NotNull SpigotEngine engine) {
+    protected PluginAttachmentContainer<SpigotHandler<?>> ofHandlers(@NotNull SpigotEngine engine) {
         // override me.
-        return AttachmentContainer.empty();
+        return PluginAttachmentContainer.empty();
     }
 
     protected AttachmentContainer<Listener> ofListeners(@NotNull SpigotEngine engine) {

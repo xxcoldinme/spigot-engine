@@ -5,9 +5,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Recipe;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.SpigotEngineAttachment;
 import ru.lyx.spigot.engine.core.context.SpigotIncludedContext;
-import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
+import ru.lyx.spigot.engine.core.module.SpigotModule;
+import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 
 public class SpigotContextEditSession extends SpigotIncludedContext<SpigotEngineContext> {
 
@@ -20,13 +22,8 @@ public class SpigotContextEditSession extends SpigotIncludedContext<SpigotEngine
         this.sessionContainer = mainContainer.clone();
     }
 
-    public SpigotContextEditSession addModules(AttachmentContainer<SpigotModuleFactory<?>> container) {
-        sessionContainer.getModules().addAll(container);
-        return this;
-    }
-
-    public SpigotContextEditSession setModules(AttachmentContainer<SpigotModuleFactory<?>> container) {
-        sessionContainer.getModules().setAll(container);
+    public SpigotContextEditSession addHandlers(PluginAttachmentContainer<SpigotHandler<? extends SpigotModule<?>>> container) {
+        sessionContainer.getHandlers().addAll(container);
         return this;
     }
 
@@ -35,18 +32,8 @@ public class SpigotContextEditSession extends SpigotIncludedContext<SpigotEngine
         return this;
     }
 
-    public SpigotContextEditSession setListeners(AttachmentContainer<Listener> container) {
-        sessionContainer.getListeners().setAll(container);
-        return this;
-    }
-
     public SpigotContextEditSession addCommands(AttachmentContainer<CommandExecutor> container) {
         sessionContainer.getCommands().addAll(container);
-        return this;
-    }
-
-    public SpigotContextEditSession setCommands(AttachmentContainer<CommandExecutor> container) {
-        sessionContainer.getCommands().setAll(container);
         return this;
     }
 
@@ -55,38 +42,18 @@ public class SpigotContextEditSession extends SpigotIncludedContext<SpigotEngine
         return this;
     }
 
-    public SpigotContextEditSession setRecipes(AttachmentContainer<Recipe> container) {
-        sessionContainer.getRecipes().setAll(container);
-        return this;
-    }
-
     public SpigotContextEditSession addWorlds(AttachmentContainer<World> container) {
         sessionContainer.getWorlds().addAll(container);
         return this;
     }
 
-    public SpigotContextEditSession setWorlds(AttachmentContainer<World> container) {
-        sessionContainer.getWorlds().setAll(container);
-        return this;
-    }
-
-    public SpigotContextEditSession addEnabledLinks(AttachmentContainer<SpigotEngineAttachment> container) {
+    public SpigotContextEditSession addEnabledLinks(PluginAttachmentContainer<SpigotEngineAttachment> container) {
         sessionContainer.getEnablingHooks().addAll(container);
         return this;
     }
 
-    public SpigotContextEditSession setEnabledLinks(AttachmentContainer<SpigotEngineAttachment> container) {
-        sessionContainer.getEnablingHooks().setAll(container);
-        return this;
-    }
-
-    public SpigotContextEditSession addDisabledLinks(AttachmentContainer<SpigotEngineAttachment> container) {
+    public SpigotContextEditSession addDisabledLinks(PluginAttachmentContainer<SpigotEngineAttachment> container) {
         sessionContainer.getDisablingHooks().addAll(container);
-        return this;
-    }
-
-    public SpigotContextEditSession setDisabledLinks(AttachmentContainer<SpigotEngineAttachment> container) {
-        sessionContainer.getDisablingHooks().setAll(container);
         return this;
     }
 

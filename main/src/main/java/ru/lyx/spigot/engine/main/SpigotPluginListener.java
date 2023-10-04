@@ -10,7 +10,7 @@ import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.plugin.SpigotContextPlugin;
 
 @RequiredArgsConstructor
-public final class SpigotPluginLoadingObserver implements Listener {
+public final class SpigotPluginListener implements Listener {
 
     private final SpigotEngine engine;
 

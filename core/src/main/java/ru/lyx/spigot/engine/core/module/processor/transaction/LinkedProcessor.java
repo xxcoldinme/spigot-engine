@@ -15,6 +15,6 @@ public class LinkedProcessor {
     private final Class<? extends SpigotModuleProcessor<?, ?>> processorClass;
 
     public SpigotModuleProcessor<?, ?> newProcessorInstance() {
-        return null; // TODO
+        return null; // todo
     }
 }

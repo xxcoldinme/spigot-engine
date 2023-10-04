@@ -14,4 +14,14 @@ public abstract class SpigotContextPlugin extends JavaPlugin {
     private SpigotEngine engine;
 
     public abstract void registerPlugin(@NotNull SpigotEngine engine, @NotNull SpigotEngineContext context);
+
+    @Override
+    public final void onDisable() {
+        // can`t override that.
+    }
+
+    @Override
+    public final void onEnable() {
+        // can`t override that.
+    }
 }
