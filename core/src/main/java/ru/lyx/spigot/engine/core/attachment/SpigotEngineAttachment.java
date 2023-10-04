@@ -6,5 +6,5 @@ import ru.lyx.spigot.engine.core.plugin.SpigotContextPlugin;
 @FunctionalInterface
 public interface SpigotEngineAttachment {
 
-    void post(@NotNull SpigotContextPlugin plugin);
+    void attach(@NotNull SpigotContextPlugin plugin);
 }
