@@ -1,8 +1,9 @@
-package ru.lyx.spigot.engine.core.key;
+package ru.lyx.spigot.engine.core.module;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import ru.lyx.spigot.engine.core.key.KeyProperty;
 
 @Getter
 @ToString

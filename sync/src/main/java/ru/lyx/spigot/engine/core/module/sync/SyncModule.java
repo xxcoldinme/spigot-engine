@@ -9,17 +9,21 @@ import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.module.AbstractSpigotModule;
 import ru.lyx.spigot.engine.core.module.Factory;
 import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
+import ru.lyx.spigot.engine.core.module.SpigotModuleTypes;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 import ru.lyx.spigot.engine.core.module.sync.connection.ConnectionBootstrap;
 import ru.lyx.spigot.engine.core.module.sync.processor.SocketConnectionOpenProcessor;
 import ru.lyx.spigot.engine.core.module.sync.processor.SocketConnectionStableProcessor;
 
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class SyncModule extends AbstractSpigotModule<SyncContext> {
 
     @Factory
     private static SpigotModuleFactory<SyncModule> factory() {
         return new SyncModuleFactory();
+    }
+
+    private SyncModule() {
+        super(SpigotModuleTypes.DATA_SYNC);
     }
 
     @Override
