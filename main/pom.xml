@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>ru.lyx</groupId>
-            <artifactId>spigot-engine-model</artifactId>
+            <artifactId>spigot-engine-core</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

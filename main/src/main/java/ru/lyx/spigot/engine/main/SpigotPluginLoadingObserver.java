@@ -6,8 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
-import ru.lyx.spigot.engine.SpigotEngine;
-import ru.lyx.spigot.engine.plugin.SpigotContextPlugin;
+import ru.lyx.spigot.engine.core.SpigotEngine;
+import ru.lyx.spigot.engine.core.plugin.SpigotContextPlugin;
 
 @RequiredArgsConstructor
 public final class SpigotPluginLoadingObserver implements Listener {

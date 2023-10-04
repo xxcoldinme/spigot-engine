@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>model</module>
+        <module>core</module>
         <module>test</module>
         <module>main</module>
         <module>command</module>

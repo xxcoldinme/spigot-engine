@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import ru.lyx.spigot.engine.SpigotEngine;
-import ru.lyx.spigot.engine.listener.SpigotEngineListener;
+import ru.lyx.spigot.engine.core.SpigotEngine;
+import ru.lyx.spigot.engine.core.listener.SpigotEngineListener;
 
 public class TestPlayerJoinQuitListener extends SpigotEngineListener {
 

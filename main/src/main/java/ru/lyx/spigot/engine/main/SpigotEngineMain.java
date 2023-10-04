@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.lyx.spigot.engine.SpigotEngine;
+import ru.lyx.spigot.engine.core.SpigotEngine;
 
 public final class SpigotEngineMain extends JavaPlugin {
 
