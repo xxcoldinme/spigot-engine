@@ -1,8 +1,0 @@
-name: SpigotEngine
-main: ru.lyx.spigot.engine.main.SpigotEngineMain
-
-version: 1.0
-api-version: 1.13
-
-author: lyx
-softdepend: [Vault, ProtocolLib]
