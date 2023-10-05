@@ -3,15 +3,10 @@ package ru.lyx.spigot.engine.core.module;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.context.SpigotContext;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
-import ru.lyx.spigot.engine.core.module.processor.ProcessorContext;
 import ru.lyx.spigot.engine.core.module.processor.ProcessorExecutor;
-import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
-import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
