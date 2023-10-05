@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
-import ru.lyx.spigot.engine.core.context.SpigotContext;
+import ru.lyx.spigot.engine.core.SpigotContext;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.core.module.processor.transaction.LinkedProcessor;
@@ -29,8 +29,8 @@ public class ProcessorExecutor {
     private final ReflectionService reflectionService;
 
     @SuppressWarnings({"unchecked"})
-    public <T extends SpigotModule<C>, C extends SpigotContext> void execProcessors(@NotNull T module) {
-        final C context = module.lookupContext();
+    public <T extends SpigotModule<C, ?>, C extends SpigotContext> void execProcessors(@NotNull T module) {
+        final C context = module.getContext();
 
         final AttachmentContainer<SpigotModuleProcessor<?, ?>> processors
                 = module.ofProcessors(engine);
@@ -82,7 +82,7 @@ public class ProcessorExecutor {
         cached = null;
     }
 
-    private boolean isProcessorLinked(SpigotModule<?> module, SpigotModuleProcessor<?, ?> processor) {
+    private boolean isProcessorLinked(SpigotModule<?, ?> module, SpigotModuleProcessor<?, ?> processor) {
         Class<Object> genericType = reflectionService.getGenericType(
                 SpigotMetadata.create()
                         .with(GetGenericTypeHandler.GENERIC_TYPE_INDEX.clone(0))

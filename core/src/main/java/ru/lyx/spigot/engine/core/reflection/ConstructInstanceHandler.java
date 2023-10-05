@@ -1,7 +1,7 @@
 package ru.lyx.spigot.engine.core.reflection;
 
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.exception.SpigotEngineException;
+import ru.lyx.spigot.engine.core.SpigotEngineException;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.metadata.MetadataProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
@@ -9,7 +9,7 @@ import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import java.lang.reflect.Constructor;
 import java.util.stream.Stream;
 
-public class InstanceByConstructorHandler<T> implements ReflectionHandler<T> {
+public class ConstructInstanceHandler<T> implements ReflectionHandler<T> {
 
     public static final MetadataProperty<Class<?>> TARGET_CLASS = MetadataProperty.ofNullable(
             KeyProperty.of("TargetClass"));

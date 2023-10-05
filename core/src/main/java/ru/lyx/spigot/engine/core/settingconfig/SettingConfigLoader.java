@@ -3,15 +3,14 @@ package ru.lyx.spigot.engine.core.settingconfig;
 import org.ini4j.Ini;
 import org.ini4j.Profile;
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.exception.SpigotEngineException;
-import ru.lyx.spigot.engine.core.settingconfig.model.SettingGroup;
-import ru.lyx.spigot.engine.core.settingconfig.model.SettingProperty;
+import ru.lyx.spigot.engine.core.SpigotEngineException;
+import ru.lyx.spigot.engine.core.settingconfig.type.SettingGroup;
+import ru.lyx.spigot.engine.core.settingconfig.type.SettingProperty;
 
 import java.io.*;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class SettingConfigLoader {
 
@@ -45,7 +44,7 @@ public final class SettingConfigLoader {
     private SettingProperty[] loadProperties(Ini ini, String groupName) {
         List<Profile.Section> sectionList = ini.getAll(groupName);
         return sectionList.stream()
-                .flatMap(section -> Stream.of(section.childrenNames()))
+                .flatMap(section -> section.keySet().stream())
                 .map(propertyName -> new SettingProperty(propertyName, ini.get(groupName, propertyName)))
                 .toArray(SettingProperty[]::new);
     }

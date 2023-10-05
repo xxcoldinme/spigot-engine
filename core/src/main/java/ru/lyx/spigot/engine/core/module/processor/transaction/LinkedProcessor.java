@@ -6,7 +6,7 @@ import lombok.ToString;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
-import ru.lyx.spigot.engine.core.reflection.InstanceByConstructorHandler;
+import ru.lyx.spigot.engine.core.reflection.ConstructInstanceHandler;
 import ru.lyx.spigot.engine.core.reflection.ReflectionService;
 
 @Getter
@@ -17,10 +17,10 @@ public class LinkedProcessor {
     private final Class<? extends SpigotModuleProcessor<?, ?>> processorClass;
 
     public SpigotModuleProcessor<?, ?> newProcessorInstance(ReflectionService reflectionService) {
-        return reflectionService.newInstanceByConstructor(
+        return reflectionService.constructInstance(
                 SpigotMetadata.create()
-                        .with(InstanceByConstructorHandler.THROW_EXCEPTION.clone(true))
-                        .with(InstanceByConstructorHandler.TARGET_CLASS.clone(processorClass)));
+                        .with(ConstructInstanceHandler.THROW_EXCEPTION.clone(true))
+                        .with(ConstructInstanceHandler.TARGET_CLASS.clone(processorClass)));
     }
 
     public SpigotModuleProcessor<?, ?> lookupCached(AttachmentContainer<SpigotModuleProcessor<?, ?>> processors) {

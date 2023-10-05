@@ -12,7 +12,7 @@ import ru.lyx.spigot.engine.core.module.sync.connection.ConnectionBootstrap;
 import ru.lyx.spigot.engine.core.module.sync.processor.SocketConnectionOpenProcessor;
 import ru.lyx.spigot.engine.core.module.sync.processor.SocketConnectionStableProcessor;
 
-public class SyncModule extends AbstractSpigotModule<SyncContext> {
+public class SyncModule extends AbstractSpigotModule<SyncContext, SyncConfigModel> {
 
     @Factory
     private static SpigotModuleFactory<SyncModule> factory() {
@@ -24,15 +24,20 @@ public class SyncModule extends AbstractSpigotModule<SyncContext> {
     }
 
     @Override
-    protected SyncContext createContext() {
-        return new SyncContext();
-    }
-
-    @Override
     public AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine) {
         return AttachmentContainer.of(
                 new SocketConnectionOpenProcessor(new ConnectionBootstrap()),
                 new SocketConnectionStableProcessor()
         );
+    }
+
+    @Override
+    protected SyncContext createContext() {
+        return new SyncContext();
+    }
+
+    @Override
+    protected SyncConfigModel createConfigModel() {
+        return new SyncConfigModel();
     }
 }

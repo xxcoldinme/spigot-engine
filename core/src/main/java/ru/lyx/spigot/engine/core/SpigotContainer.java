@@ -8,21 +8,21 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
-import ru.lyx.spigot.engine.core.attachment.SpigotEngineAttachment;
+import ru.lyx.spigot.engine.core.attachment.SpigotAttachment;
 import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
-import ru.lyx.spigot.engine.core.exception.SpigotEngineException;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 
 @Getter
 @ToString
 public final class SpigotContainer {
 
-    private final PluginAttachmentContainer<SpigotEngineAttachment> enablingHooks
+    private final PluginAttachmentContainer<SpigotAttachment> enablingHooks
             = PluginAttachmentContainer.empty();
-    private final PluginAttachmentContainer<SpigotEngineAttachment> disablingHooks
+    private final PluginAttachmentContainer<SpigotAttachment> disablingHooks
             = PluginAttachmentContainer.empty();
 
     private final PluginAttachmentContainer<SpigotHandler<?>> handlers = PluginAttachmentContainer.empty();
+
     private final AttachmentContainer<CommandExecutor> commands = AttachmentContainer.empty();
     private final AttachmentContainer<Listener> listeners = AttachmentContainer.empty();
     private final AttachmentContainer<Recipe> recipes = AttachmentContainer.empty();
@@ -33,6 +33,7 @@ public final class SpigotContainer {
         disablingHooks.setAll(container.getDisablingHooks());
 
         handlers.setAll(container.getHandlers());
+
         commands.setAll(container.getCommands());
         listeners.setAll(container.getListeners());
         recipes.setAll(container.getRecipes());

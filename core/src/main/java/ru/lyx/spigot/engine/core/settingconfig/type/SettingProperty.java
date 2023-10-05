@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.core.settingconfig.model;
+package ru.lyx.spigot.engine.core.settingconfig.type;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

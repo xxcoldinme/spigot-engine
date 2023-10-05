@@ -10,7 +10,7 @@ import ru.lyx.spigot.engine.core.module.SpigotModuleTypes;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 import ru.lyx.spigot.engine.core.module.world.processor.ServerWorldsWrappingProcessor;
 
-public class WorldModule extends AbstractSpigotModule<WorldContext> {
+public class WorldModule extends AbstractSpigotModule<WorldContext, WorldConfigModel> {
 
     @Factory
     private static SpigotModuleFactory<WorldModule> factory() {
@@ -22,14 +22,34 @@ public class WorldModule extends AbstractSpigotModule<WorldContext> {
     }
 
     @Override
-    protected WorldContext createContext() {
-        return new WorldContext();
-    }
-
-    @Override
     public AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine) {
         return AttachmentContainer.of(
                 new ServerWorldsWrappingProcessor()
         );
     }
+
+    @Override
+    protected WorldContext createContext() {
+        return new WorldContext();
+    }
+
+    @Override
+    protected WorldConfigModel createConfigModel() {
+        return new WorldConfigModel();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

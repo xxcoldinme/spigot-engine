@@ -12,7 +12,7 @@ import ru.lyx.spigot.engine.core.module.SpigotModule;
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public class SpigotHandlerContext<T extends SpigotModule<?>> {
+public class SpigotHandlerContext<T extends SpigotModule<?, ?>> {
 
     private final SpigotHandlingTrigger trigger;
     private final SpigotEngine engine;

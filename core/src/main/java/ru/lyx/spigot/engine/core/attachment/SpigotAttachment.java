@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.plugin.SpigotContextPlugin;
 
 @FunctionalInterface
-public interface SpigotEngineAttachment {
+public interface SpigotAttachment {
 
     void attach(@NotNull SpigotContextPlugin plugin);
 }

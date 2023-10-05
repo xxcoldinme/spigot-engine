@@ -19,11 +19,8 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class AttachmentContainer<T> {
 
-    private static final AttachmentContainer<?> EMPTY
-            = new AttachmentContainer<>(new ArrayList<>());
-
     public static <T> AttachmentContainer<T> empty() {
-        return (AttachmentContainer<T>) EMPTY;
+        return new AttachmentContainer<>(new ArrayList<>());
     }
 
     public static <T> AttachmentContainer<T> of(T... definitions) {

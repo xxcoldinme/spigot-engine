@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 
@@ -23,6 +24,11 @@ public class SpigotMetadata {
 
     public SpigotMetadata with(@NotNull MetadataProperty<?> property) {
         container.add(property);
+        return this;
+    }
+
+    public SpigotMetadata with(@NotNull KeyProperty<?> keyProperty, @Nullable Object value) {
+        container.add(MetadataProperty.of(keyProperty, value));
         return this;
     }
 

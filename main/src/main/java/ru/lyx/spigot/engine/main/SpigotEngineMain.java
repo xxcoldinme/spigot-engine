@@ -12,7 +12,7 @@ import ru.lyx.spigot.engine.core.module.world.WorldModule;
 public final class SpigotEngineMain extends JavaPlugin {
 
     @SuppressWarnings("unchecked")
-    private static final AttachmentContainer<Class<? extends SpigotModule<?>>> TOTAL_MODULES
+    private static final AttachmentContainer<Class<? extends SpigotModule<?, ?>>> TOTAL_MODULES
             = AttachmentContainer.of(
                     SyncModule.class, WorldModule.class);
 

@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.context.SpigotContext;
+import ru.lyx.spigot.engine.core.SpigotContext;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
 
 @Getter
 @RequiredArgsConstructor
-public class ProcessorContext<T extends SpigotModule<?>, C extends SpigotContext> {
+public class ProcessorContext<T extends SpigotModule<C, ?>, C extends SpigotContext> {
 
     private final SpigotEngine engine;
 

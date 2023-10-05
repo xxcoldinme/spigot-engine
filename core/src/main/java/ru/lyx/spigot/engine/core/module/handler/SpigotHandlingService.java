@@ -2,6 +2,7 @@ package ru.lyx.spigot.engine.core.module.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.bukkit.plugin.Plugin;
+import ru.lyx.spigot.engine.core.SpigotContainer;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.plugin.PluginProperty;
@@ -18,11 +19,12 @@ import java.util.stream.Collectors;
 public class SpigotHandlingService {
 
     private final SpigotEngine engine;
+    private final SpigotContainer container;
     private final ReflectionService reflectionService;
 
     private AttachmentContainer<SpigotHandler<?>> getTotalHandlers() {
         final AttachmentContainer<PluginProperty<SpigotHandler<?>>> attachmentContainer
-                = engine.getContainer().getHandlers().getParent();
+                = container.getHandlers().getParent();
         return AttachmentContainer.of(
                 attachmentContainer.getDefinitions()
                         .stream()
@@ -31,7 +33,7 @@ public class SpigotHandlingService {
     }
 
     private AttachmentContainer<SpigotHandler<?>> getPluginHandlers(Plugin plugin) {
-        final Collection<PluginProperty<SpigotHandler<?>>> collection = engine.getContainer().getHandlers()
+        final Collection<PluginProperty<SpigotHandler<?>>> collection = container.getHandlers()
                 .findByPlugin(plugin);
         return AttachmentContainer.of(
                 collection.stream()
@@ -39,7 +41,7 @@ public class SpigotHandlingService {
                         .collect(Collectors.toList()));
     }
 
-    private AttachmentContainer<SpigotHandler<?>> getModuleHandlers(Class<? extends SpigotModule<?>> cls) {
+    private AttachmentContainer<SpigotHandler<?>> getModuleHandlers(Class<? extends SpigotModule<?, ?>> cls) {
         final List<SpigotHandler<?>> definitions = getTotalHandlers()
                 .getDefinitions();
         return AttachmentContainer.of(
@@ -49,7 +51,7 @@ public class SpigotHandlingService {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends SpigotModule<?>> void sendHandlerGeneric(SpigotHandler<T> handler, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    private <T extends SpigotModule<?, ?>> void sendHandlerGeneric(SpigotHandler<T> handler, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
         final Class<T> parentClass = (Class<T>) lookupParentModule(handler.getClass());
         final T spigotModule = engine.lookupModule(parentClass);
 
@@ -73,12 +75,12 @@ public class SpigotHandlingService {
         sendHandler(getPluginHandlers(plugin), trigger, metadata);
     }
 
-    public void sendModuleHandler(Class<? extends SpigotModule<?>> cls, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    public void sendModuleHandler(Class<? extends SpigotModule<?, ?>> cls, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
         sendHandler(getModuleHandlers(cls), trigger, metadata);
     }
 
     @SuppressWarnings("rawtypes")
-    private Class<? extends SpigotModule<?>> lookupParentModule(Class<? extends SpigotHandler> handler) {
+    private Class<? extends SpigotModule<?, ?>> lookupParentModule(Class<? extends SpigotHandler> handler) {
         return reflectionService.getGenericType(
                 SpigotMetadata.create()
                         .with(GetGenericTypeHandler.GENERIC_TYPE_INDEX.clone(0))

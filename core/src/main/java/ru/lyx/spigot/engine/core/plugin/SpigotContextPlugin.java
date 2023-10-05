@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.SpigotEngineContext;
 
 public abstract class SpigotContextPlugin extends JavaPlugin {
 

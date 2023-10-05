@@ -6,8 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Recipe;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
-import ru.lyx.spigot.engine.core.attachment.SpigotEngineAttachment;
-import ru.lyx.spigot.engine.core.context.SpigotContext;
+import ru.lyx.spigot.engine.core.attachment.SpigotAttachment;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 
@@ -22,7 +21,7 @@ public class SpigotContainerBuilder implements SpigotContext {
         this.sessionContainer = mainContainer.clone();
     }
 
-    public SpigotContainerBuilder addHandlers(PluginAttachmentContainer<SpigotHandler<? extends SpigotModule<?>>> container) {
+    public SpigotContainerBuilder addHandlers(PluginAttachmentContainer<SpigotHandler<? extends SpigotModule<?, ?>>> container) {
         sessionContainer.getHandlers().addAll(container);
         return this;
     }
@@ -47,12 +46,12 @@ public class SpigotContainerBuilder implements SpigotContext {
         return this;
     }
 
-    public SpigotContainerBuilder addEnabledLinks(PluginAttachmentContainer<SpigotEngineAttachment> container) {
+    public SpigotContainerBuilder addEnabledLinks(PluginAttachmentContainer<SpigotAttachment> container) {
         sessionContainer.getEnablingHooks().addAll(container);
         return this;
     }
 
-    public SpigotContainerBuilder addDisabledLinks(PluginAttachmentContainer<SpigotEngineAttachment> container) {
+    public SpigotContainerBuilder addDisabledLinks(PluginAttachmentContainer<SpigotAttachment> container) {
         sessionContainer.getDisablingHooks().addAll(container);
         return this;
     }

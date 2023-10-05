@@ -11,10 +11,10 @@ public class ReflectionService {
 
     private final Logger logger;
 
-    public <T> T newInstanceByConstructor(@NotNull SpigotMetadata metadata) {
+    public <T> T constructInstance(@NotNull SpigotMetadata metadata) {
         logger.info("ReflectionService.newInstanceByConstructor; " + metadata);
 
-        InstanceByConstructorHandler<T> handler = new InstanceByConstructorHandler<>();
+        ConstructInstanceHandler<T> handler = new ConstructInstanceHandler<>();
         return handler.handle(metadata);
     }
 

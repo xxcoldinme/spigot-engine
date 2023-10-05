@@ -1,9 +1,9 @@
 package ru.lyx.spigot.engine.core.module;
 
 import lombok.RequiredArgsConstructor;
-import ru.lyx.spigot.engine.core.exception.SpigotEngineException;
+import ru.lyx.spigot.engine.core.SpigotEngineException;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
-import ru.lyx.spigot.engine.core.reflection.InstanceByConstructorHandler;
+import ru.lyx.spigot.engine.core.reflection.ConstructInstanceHandler;
 import ru.lyx.spigot.engine.core.reflection.ReflectionService;
 
 import java.lang.invoke.MethodHandle;
@@ -22,16 +22,16 @@ public class SpigotModuleFactoryHelper {
     private final Map<Class<?>, SpigotModuleFactory<?>> factoriesCacheMap = new HashMap<>();
     private final ReflectionService reflectionService;
 
-    public <T extends SpigotModule<?>> SpigotModuleFactory<T> of(Class<T> cls) {
+    public <T extends SpigotModule<?, ?>> SpigotModuleFactory<T> of(Class<T> cls) {
         return lookupFactory(cls);
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends SpigotModule<?>> SpigotModuleFactory<T> lookupFactory(Class<T> cls) {
+    private <T extends SpigotModule<?, ?>> SpigotModuleFactory<T> lookupFactory(Class<T> cls) {
         return (SpigotModuleFactory<T>) factoriesCacheMap.computeIfAbsent(cls, f -> createFactory(cls));
     }
 
-    private <T extends SpigotModule<?>> SpigotModuleFactory<T> createFactory(Class<T> cls) {
+    private <T extends SpigotModule<?, ?>> SpigotModuleFactory<T> createFactory(Class<T> cls) {
         FactoryMethod<T> factory = findFactory(cls);
         if (factory == null) {
             return (() -> newConstructorInstance(cls));
@@ -61,10 +61,10 @@ public class SpigotModuleFactoryHelper {
     }
 
     private <T> T newConstructorInstance(Class<T> cls) {
-        return reflectionService.newInstanceByConstructor(
+        return reflectionService.constructInstance(
                 SpigotMetadata.create()
-                        .with(InstanceByConstructorHandler.THROW_EXCEPTION.clone(false))
-                        .with(InstanceByConstructorHandler.TARGET_CLASS.clone(cls))
+                        .with(ConstructInstanceHandler.THROW_EXCEPTION.clone(false))
+                        .with(ConstructInstanceHandler.TARGET_CLASS.clone(cls))
         );
     }
 

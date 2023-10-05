@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 
-public interface SpigotHandler<T extends SpigotModule<?>> {
+public interface SpigotHandler<T extends SpigotModule<?, ?>> {
 
 // -------------------------- // VALIDATION // ----------------------------------------- //
 

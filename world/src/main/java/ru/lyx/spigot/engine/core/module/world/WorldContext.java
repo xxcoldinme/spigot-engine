@@ -2,7 +2,7 @@ package ru.lyx.spigot.engine.core.module.world;
 
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.context.SpigotContext;
+import ru.lyx.spigot.engine.core.SpigotContext;
 import ru.lyx.spigot.engine.core.module.world.model.WrappedWorld;
 
 import java.util.HashMap;

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
-import ru.lyx.spigot.engine.core.attachment.SpigotEngineAttachment;
+import ru.lyx.spigot.engine.core.attachment.SpigotAttachment;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 
 public abstract class SpigotBasePlugin
@@ -16,12 +16,12 @@ public abstract class SpigotBasePlugin
 
     @Override
     public final void registerPlugin(@NotNull SpigotEngine engine) {
-        final PluginAttachmentContainer<SpigotEngineAttachment> enabledLinkAttachment
-                = PluginAttachmentContainer.<SpigotEngineAttachment>empty()
+        final PluginAttachmentContainer<SpigotAttachment> enabledLinkAttachment
+                = PluginAttachmentContainer.<SpigotAttachment>empty()
                     .add(this, (pl) -> doEnable(engine));
 
-        final PluginAttachmentContainer<SpigotEngineAttachment> disabledLinkAttachment
-                = PluginAttachmentContainer.<SpigotEngineAttachment>empty()
+        final PluginAttachmentContainer<SpigotAttachment> disabledLinkAttachment
+                = PluginAttachmentContainer.<SpigotAttachment>empty()
                     .add(this, (pl) -> doDisable(engine));
 
         final PluginAttachmentContainer<SpigotHandler<?>> handlersContainer = ofHandlers(engine);

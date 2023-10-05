@@ -3,7 +3,7 @@ package ru.lyx.spigot.engine.core.metadata;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.lyx.spigot.engine.core.exception.SpigotEngineException;
+import ru.lyx.spigot.engine.core.SpigotEngineException;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 
 @Getter
