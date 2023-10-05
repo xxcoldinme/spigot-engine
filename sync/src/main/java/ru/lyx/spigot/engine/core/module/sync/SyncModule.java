@@ -1,7 +1,6 @@
 package ru.lyx.spigot.engine.core.module.sync;
 
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.SpigotEngineContext;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.module.AbstractSpigotModule;
@@ -25,12 +24,12 @@ public class SyncModule extends AbstractSpigotModule<SyncContext> {
     }
 
     @Override
-    protected SyncContext createContext(@NotNull SpigotEngineContext previousContext) {
-        return new SyncContext(previousContext);
+    protected SyncContext createContext() {
+        return new SyncContext();
     }
 
     @Override
-    public AttachmentContainer<SpigotModuleProcessor<?, SyncContext>> ofProcessors(@NotNull SpigotEngine engine, @NotNull SyncContext context) {
+    public AttachmentContainer<SpigotModuleProcessor<?, SyncContext>> ofProcessors(@NotNull SpigotEngine engine) {
         return AttachmentContainer.of(
                 new SocketConnectionOpenProcessor(new ConnectionBootstrap()),
                 new SocketConnectionStableProcessor()

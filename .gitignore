@@ -1,6 +1,9 @@
 # IntelliJ IDEA
 .idea
 
+# Maven Architype
+target
+
 # Compiled class file
 *.class
 

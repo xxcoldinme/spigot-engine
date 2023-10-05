@@ -18,7 +18,7 @@ public class WorldClearingHandler implements SpigotHandler<WorldModule> {
 
     @Override
     public void handle(@NotNull SpigotHandlerContext<WorldModule> context) {
-        WorldContext worldContext = context.getModule().getContext();
+        WorldContext worldContext = context.getModule().lookupContext();
 
         if (context.getTrigger() == SpigotHandlingTrigger.PLUGIN_REGISTERED) {
 

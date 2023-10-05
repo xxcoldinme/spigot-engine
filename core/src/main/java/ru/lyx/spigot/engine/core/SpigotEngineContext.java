@@ -7,8 +7,4 @@ import ru.lyx.spigot.engine.core.context.SpigotContext;
 public class SpigotEngineContext implements SpigotContext {
 
     private final SpigotContainer container;
-
-    public final SpigotContextEditSession openEditSession() {
-        return new SpigotContextEditSession(container, this);
-    }
 }

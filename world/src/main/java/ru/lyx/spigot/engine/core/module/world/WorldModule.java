@@ -23,12 +23,12 @@ public class WorldModule extends AbstractSpigotModule<WorldContext> {
     }
 
     @Override
-    protected WorldContext createContext(@NotNull SpigotEngineContext previousContext) {
+    protected WorldContext createContext() {
         return new WorldContext();
     }
 
     @Override
-    public AttachmentContainer<SpigotModuleProcessor<?, WorldContext>> ofProcessors(@NotNull SpigotEngine engine, @NotNull WorldContext context) {
+    public AttachmentContainer<SpigotModuleProcessor<?, WorldContext>> ofProcessors(@NotNull SpigotEngine engine) {
         return AttachmentContainer.of(
                 new ServerWorldsWrappingProcessor()
         );

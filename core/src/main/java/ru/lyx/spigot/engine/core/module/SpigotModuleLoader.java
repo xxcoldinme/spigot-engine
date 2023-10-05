@@ -41,9 +41,9 @@ public class SpigotModuleLoader {
 
     @SuppressWarnings({"unchecked", "CastCanBeRemovedNarrowingVariableType"})
     public void executeProcessors(@NotNull SpigotModule<SpigotContext> spigotModule) {
-        final SpigotContext context = spigotModule.lookupContext(engine.getContext());
+        final SpigotContext context = spigotModule.lookupContext();
         final AttachmentContainer<SpigotModuleProcessor<?, SpigotContext>> processors
-                = spigotModule.ofProcessors(engine, context);
+                = spigotModule.ofProcessors(engine);
 
         processors.getDefinitions()
                 .forEach(processor -> {

@@ -6,7 +6,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.SpigotEngineContext;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.SpigotEngineAttachment;
@@ -16,7 +15,7 @@ public abstract class SpigotBasePlugin
         extends SpigotContextPlugin {
 
     @Override
-    public final void registerPlugin(@NotNull SpigotEngine engine, @NotNull SpigotEngineContext context) {
+    public final void registerPlugin(@NotNull SpigotEngine engine) {
         final PluginAttachmentContainer<SpigotEngineAttachment> enabledLinkAttachment
                 = PluginAttachmentContainer.<SpigotEngineAttachment>empty()
                     .add(this, (pl) -> doEnable(engine));
@@ -31,7 +30,7 @@ public abstract class SpigotBasePlugin
         final AttachmentContainer<Recipe> recipesContainer = ofRecipes(engine);
         final AttachmentContainer<World> worldsContainer = ofWorlds(engine);
 
-        context.openEditSession()
+        engine.doEditContainers()
                 .addHandlers(handlersContainer)
                 .addListeners(listenersContainer)
                 .addCommands(commandsContainer)
@@ -40,7 +39,7 @@ public abstract class SpigotBasePlugin
 
                 .addEnabledLinks(enabledLinkAttachment)
                 .addDisabledLinks(disabledLinkAttachment)
-                .merge();
+                .toEngine();
     }
 
     protected PluginAttachmentContainer<SpigotHandler<?>> ofHandlers(@NotNull SpigotEngine engine) {

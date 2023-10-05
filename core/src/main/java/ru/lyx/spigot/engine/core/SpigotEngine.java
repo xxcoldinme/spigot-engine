@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
-import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
 import ru.lyx.spigot.engine.core.module.SpigotModuleFactoryHelper;
 import ru.lyx.spigot.engine.core.module.SpigotModuleLoader;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandlingService;
@@ -51,6 +50,10 @@ public final class SpigotEngine {
         // ----------------------------------------------------------------------------------- //
     }
 
+    public SpigotContainerBuilder doEditContainers() {
+        return new SpigotContainerBuilder(this, container);
+    }
+
     private void removePluginData(@NotNull Plugin plugin) {
         container.getDisablingHooks().removeAll(plugin);
         container.getEnablingHooks().removeAll(plugin);
@@ -60,7 +63,7 @@ public final class SpigotEngine {
     public void registerPlugin(@NotNull SpigotContextPlugin plugin) {
         pluginContainer.addPlugin(plugin);
 
-        plugin.registerPlugin(this, context);
+        plugin.registerPlugin(this);
         sendPluginEmptyHandler(plugin, SpigotHandlingTrigger.PLUGIN_REGISTERED);
     }
 

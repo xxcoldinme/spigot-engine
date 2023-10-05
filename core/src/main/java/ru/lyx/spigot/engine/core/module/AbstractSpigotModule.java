@@ -16,7 +16,7 @@ public abstract class AbstractSpigotModule<T extends SpigotContext>
     private final SpigotModuleTypes type;
     private WeakReference<T> contextRef;
 
-    protected abstract T createContext(SpigotEngineContext previousContext);
+    protected abstract T createContext();
 
     @Override
     public KeyProperty<String> getKey() {
@@ -24,19 +24,10 @@ public abstract class AbstractSpigotModule<T extends SpigotContext>
     }
 
     @Override
-    public final T lookupContext(@NotNull SpigotEngineContext previousContext) {
+    public final T lookupContext() {
         if (contextRef == null || contextRef.get() == null) {
-            contextRef = new WeakReference<>(createContext(previousContext));
+            contextRef = new WeakReference<>(createContext());
         }
         return contextRef.get();
-    }
-
-    public final T getContext() {
-        T context = contextRef.get();
-        if (context == null) {
-            throw new SpigotEngineException("Context still not initialized");
-        }
-
-        return context;
     }
 }

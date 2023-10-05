@@ -1,0 +1,8 @@
+name: TestPlugin
+main: ru.lyx.spigot.engine.test.plugin.TestSpigotBasePlugin
+
+version: 1.0
+api-version: 1.13
+
+author: lyx
+depend: [SpigotEngine]

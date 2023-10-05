@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 @RequiredArgsConstructor
-public class SpigotPluginContainer {
+public final class SpigotPluginContainer {
 
     private final Map<String, SpigotContextPlugin> pluginsMap = new ConcurrentHashMap<>();
     private final Logger logger;
