@@ -2,7 +2,6 @@ package ru.lyx.spigot.engine.core.module.world;
 
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.SpigotEngineContext;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.module.AbstractSpigotModule;
 import ru.lyx.spigot.engine.core.module.Factory;
@@ -28,7 +27,7 @@ public class WorldModule extends AbstractSpigotModule<WorldContext> {
     }
 
     @Override
-    public AttachmentContainer<SpigotModuleProcessor<?, WorldContext>> ofProcessors(@NotNull SpigotEngine engine) {
+    public AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine) {
         return AttachmentContainer.of(
                 new ServerWorldsWrappingProcessor()
         );

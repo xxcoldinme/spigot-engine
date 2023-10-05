@@ -4,17 +4,30 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
+import ru.lyx.spigot.engine.core.reflection.InstanceByConstructorHandler;
+import ru.lyx.spigot.engine.core.reflection.ReflectionService;
 
 @Getter
 @ToString
 @RequiredArgsConstructor
 public class LinkedProcessor {
 
-    private final AttachmentContainer<SpigotModuleProcessor<?, ?>> attachmentContainer;
     private final Class<? extends SpigotModuleProcessor<?, ?>> processorClass;
 
-    public SpigotModuleProcessor<?, ?> newProcessorInstance() {
-        return null; // todo
+    public SpigotModuleProcessor<?, ?> newProcessorInstance(ReflectionService reflectionService) {
+        return reflectionService.newInstanceByConstructor(
+                SpigotMetadata.create()
+                        .with(InstanceByConstructorHandler.THROW_EXCEPTION.clone(true))
+                        .with(InstanceByConstructorHandler.TARGET_CLASS.clone(processorClass)));
+    }
+
+    public SpigotModuleProcessor<?, ?> lookupCached(AttachmentContainer<SpigotModuleProcessor<?, ?>> processors) {
+        return processors.getDefinitions()
+                .stream()
+                .filter(processor -> processor.getClass().equals(processorClass))
+                .findFirst()
+                .orElseThrow(() -> new NullPointerException("next processor"));
     }
 }

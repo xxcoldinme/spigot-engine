@@ -12,6 +12,7 @@ import ru.lyx.spigot.engine.core.module.SpigotModuleFactoryHelper;
 import ru.lyx.spigot.engine.core.module.SpigotModuleLoader;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandlingService;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandlingTrigger;
+import ru.lyx.spigot.engine.core.module.processor.ProcessorExecutor;
 import ru.lyx.spigot.engine.core.plugin.SpigotContextPlugin;
 import ru.lyx.spigot.engine.core.plugin.SpigotPluginContainer;
 import ru.lyx.spigot.engine.core.reflection.ReflectionService;
@@ -42,8 +43,9 @@ public final class SpigotEngine {
 
         // ----------------------------------------------------------------------------------- //
         ReflectionService reflectionService = new ReflectionService(logger);
+        ProcessorExecutor processorExecutor = new ProcessorExecutor(logger, this, reflectionService);
 
-        moduleLoader = new SpigotModuleLoader(this, logger);
+        moduleLoader = new SpigotModuleLoader(this, processorExecutor, logger);
         moduleFactoryHelper = new SpigotModuleFactoryHelper(reflectionService);
         pluginContainer = new SpigotPluginContainer(logger);
         handlingService = new SpigotHandlingService(this, reflectionService);

@@ -7,8 +7,11 @@ import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.context.SpigotContext;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.module.processor.ProcessorContext;
+import ru.lyx.spigot.engine.core.module.processor.ProcessorExecutor;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
+import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,6 +21,7 @@ import java.util.logging.Logger;
 public class SpigotModuleLoader {
 
     private final SpigotEngine engine;
+    private final ProcessorExecutor processorExecutor;
     private final Logger logger;
 
     private final Map<KeyProperty<String>, SpigotModule<?>> modulesMap = new ConcurrentHashMap<>();
@@ -29,7 +33,7 @@ public class SpigotModuleLoader {
         modulesMap.put(spigotModule.getKey(), spigotModule);
 
         //noinspection unchecked
-        executeProcessors((SpigotModule<SpigotContext>) spigotModule);
+        processorExecutor.execProcessors((SpigotModule<SpigotContext>) spigotModule);
     }
 
     public void unregisterModule(@NotNull SpigotModule<?> spigotModule) {
@@ -37,26 +41,6 @@ public class SpigotModuleLoader {
 
         logger.warning("Unregister engine module - " + key);
         modulesMap.remove(key);
-    }
-
-    @SuppressWarnings({"unchecked", "CastCanBeRemovedNarrowingVariableType"})
-    public void executeProcessors(@NotNull SpigotModule<SpigotContext> spigotModule) {
-        final SpigotContext context = spigotModule.lookupContext();
-        final AttachmentContainer<SpigotModuleProcessor<?, SpigotContext>> processors
-                = spigotModule.ofProcessors(engine);
-
-        processors.getDefinitions()
-                .forEach(processor -> {
-                    ProcessorContext<?, ?> processorContext = new ProcessorContext<>(engine, spigotModule, context);
-
-                    // без этого не работает, хз, джаве привет, остальным соболезную...
-                    final SpigotModuleProcessor<SpigotModule<SpigotContext>, SpigotContext> runningProcessor
-                            = (SpigotModuleProcessor<SpigotModule<SpigotContext>, SpigotContext>) processor;
-                    final ProcessorContext<SpigotModule<SpigotContext>, SpigotContext> runningContext
-                            = (ProcessorContext<SpigotModule<SpigotContext>, SpigotContext>) processorContext;
-
-                    runningProcessor.process(runningContext);
-                });
     }
 
     public boolean isModuleRegistered(@NotNull SpigotModule<?> spigotModule) {

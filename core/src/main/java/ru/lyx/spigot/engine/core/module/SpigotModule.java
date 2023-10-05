@@ -12,5 +12,5 @@ public interface SpigotModule<T extends SpigotContext>
 
     T lookupContext();
 
-    AttachmentContainer<SpigotModuleProcessor<?, T>> ofProcessors(@NotNull SpigotEngine engine);
+    AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine);
 }

@@ -29,7 +29,7 @@ public class ProcessTransaction {
     }
 
     public ProcessTransaction thenContinueTo(Class<? extends SpigotModuleProcessor<?, ?>> processor) {
-        next = new LinkedProcessor(attachmentContainer, processor);
+        next = new LinkedProcessor(processor);
         return this;
     }
 

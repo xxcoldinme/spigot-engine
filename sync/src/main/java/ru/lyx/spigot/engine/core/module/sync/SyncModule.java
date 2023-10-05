@@ -29,7 +29,7 @@ public class SyncModule extends AbstractSpigotModule<SyncContext> {
     }
 
     @Override
-    public AttachmentContainer<SpigotModuleProcessor<?, SyncContext>> ofProcessors(@NotNull SpigotEngine engine) {
+    public AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine) {
         return AttachmentContainer.of(
                 new SocketConnectionOpenProcessor(new ConnectionBootstrap()),
                 new SocketConnectionStableProcessor()
