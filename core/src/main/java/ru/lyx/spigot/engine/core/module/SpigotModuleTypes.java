@@ -10,7 +10,6 @@ import ru.lyx.spigot.engine.core.key.KeyProperty;
 @RequiredArgsConstructor
 public enum SpigotModuleTypes {
 
-    COMMANDS(KeyProperty.of("#_COMMANDS")),
     ENTITIES(KeyProperty.of("#_ENTITIES")),
     EVENTS(KeyProperty.of("#_EVENTS")),
     CRAFTING_RECIPES(KeyProperty.of("#_CRAFTING_RECIPES")),
