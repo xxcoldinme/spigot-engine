@@ -11,6 +11,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class SettingGroup {
 
+    @EqualsAndHashCode.Include
     private final String key;
     private final SettingProperty[] properties;
 }
