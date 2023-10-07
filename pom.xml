@@ -13,7 +13,6 @@
         <module>core</module>
         <module>test</module>
         <module>main</module>
-        <module>command</module>
         <module>entity</module>
         <module>event</module>
         <module>recipe</module>
