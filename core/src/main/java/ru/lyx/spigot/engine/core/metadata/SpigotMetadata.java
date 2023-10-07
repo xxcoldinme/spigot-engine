@@ -9,6 +9,8 @@ import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
 @ToString
@@ -45,5 +47,12 @@ public class SpigotMetadata {
     public <T> Optional<T> get(@NotNull KeyProperty<?> keyProperty) {
         return container.findFirst(definition -> definition.getKey().equals(keyProperty))
                 .map(definition -> (T) definition.getValue());
+    }
+
+    public Set<KeyProperty<?>> keys() {
+        return container.getDefinitions()
+                .stream()
+                .map(MetadataProperty::getKey)
+                .collect(Collectors.toSet());
     }
 }
