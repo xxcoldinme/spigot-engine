@@ -21,6 +21,7 @@ import ru.lyx.spigot.engine.core.settingconfig.SettingConfigLoader;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
@@ -134,5 +135,22 @@ public final class SpigotEngine {
 
     public SettingConfig loadConfig(InputStream inputStream) {
         return configLoader.load(inputStream);
+    }
+
+    public SpigotServerInfo createServerInfo() {
+        final String bukkitVersion = server.getBukkitVersion();
+        final String serverName = server.getServerName();
+        final String motd = server.getMotd();
+
+        final InetSocketAddress address = new InetSocketAddress(
+                server.getIp(),
+                server.getPort());
+
+        int maxPlayers = server.getMaxPlayers();
+        long timestamp = System.currentTimeMillis();
+
+        return new SpigotServerInfo(serverName,
+                motd, bukkitVersion,
+                address, maxPlayers, timestamp);
     }
 }
