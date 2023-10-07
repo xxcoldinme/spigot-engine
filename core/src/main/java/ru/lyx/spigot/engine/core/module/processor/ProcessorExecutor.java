@@ -75,6 +75,7 @@ public class ProcessorExecutor {
                 break;
             }
 
+            transaction.doNext();
             current = linkedProcessor.lookupCached(processors);
 
         } while (current != null);
