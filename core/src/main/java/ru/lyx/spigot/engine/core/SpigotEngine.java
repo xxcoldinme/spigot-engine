@@ -31,7 +31,6 @@ public final class SpigotEngine {
 
     @Getter
     private final Server server;
-
     @Getter
     private final Logger logger;
 
@@ -68,6 +67,10 @@ public final class SpigotEngine {
     }
 
     public void registerPlugin(@NotNull SpigotContextPlugin plugin) {
+        if (pluginContainer.hasPlugin(plugin)) {
+            throw new SpigotEngineException("plugin has already registered");
+        }
+
         pluginContainer.addPlugin(plugin);
 
         plugin.registerPlugin(this);
@@ -75,6 +78,10 @@ public final class SpigotEngine {
     }
 
     public void unregisterPlugin(@NotNull SpigotContextPlugin plugin) {
+        if (!pluginContainer.hasPlugin(plugin)) {
+            throw new SpigotEngineException("plugin still not registered");
+        }
+
         pluginContainer.removePlugin(plugin);
         sendPluginEmptyHandler(plugin, SpigotHandlingTrigger.PLUGIN_UNREGISTERED);
 

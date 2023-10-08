@@ -83,8 +83,8 @@ public class SpigotHandlingService {
     private Class<? extends SpigotModule<?, ?>> lookupParentModule(Class<? extends SpigotHandler> handler) {
         return reflectionService.getGenericType(
                 SpigotMetadata.create()
-                        .with(GetGenericTypeHandler.GENERIC_TYPE_INDEX.clone(0))
-                        .with(GetGenericTypeHandler.TARGET_CLASS.clone(handler)));
+                        .with(GetGenericTypeHandler.GENERIC_TYPE_INDEX, 0)
+                        .with(GetGenericTypeHandler.TARGET_CLASS, handler));
     }
 
 }

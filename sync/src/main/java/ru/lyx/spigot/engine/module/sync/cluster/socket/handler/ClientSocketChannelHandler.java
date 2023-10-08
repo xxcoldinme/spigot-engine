@@ -50,6 +50,7 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
             channel.setHandler(this);
             channel.setState(SocketState.ACTIVE);
 
+            // ForkJoinPool parallelism of tasks.
             executorService.submit(() -> super.handleAutoDisconnect(socket, channel));
             executorService.submit(() -> super.handleDataReceiving(socket, channel));
         }

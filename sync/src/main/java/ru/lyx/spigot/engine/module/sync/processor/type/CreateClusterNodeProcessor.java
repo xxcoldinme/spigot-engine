@@ -6,6 +6,7 @@ import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.module.processor.ProcessorContext;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
+import ru.lyx.spigot.engine.core.reflection.ReflectionService;
 import ru.lyx.spigot.engine.module.sync.SyncConfigModel;
 import ru.lyx.spigot.engine.module.sync.SyncContext;
 import ru.lyx.spigot.engine.module.sync.SyncModule;
@@ -29,8 +30,10 @@ public class CreateClusterNodeProcessor implements SpigotModuleProcessor<SyncMod
 
         TransportManager transportManager = context.getModuleContext().getTransportManager();
 
+        final ReflectionService reflectionService = new ReflectionService(context.getEngine().getLogger());
         final SocketChannel socketChannel = new SocketChannel(configModel);
-        final TransportChannel channel = new ClusterChannel(transportManager, socketChannel);
+
+        final TransportChannel channel = new ClusterChannel(reflectionService, transportManager, socketChannel);
 
         return context.getPreviousTransaction()
                 .withMetadata(SyncProcessorMetadataKeys.CHANNEL, channel)

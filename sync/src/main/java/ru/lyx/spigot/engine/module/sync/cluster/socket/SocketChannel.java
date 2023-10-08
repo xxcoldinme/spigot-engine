@@ -53,8 +53,4 @@ public class SocketChannel {
     public void receiveData(byte[] data) {
         dataConsumersSet.forEach(consumer -> consumer.accept(data));
     }
-
-    public void resetConsumers() {
-        dataConsumersSet.clear();
-    }
 }

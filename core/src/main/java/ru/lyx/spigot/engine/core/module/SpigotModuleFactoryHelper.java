@@ -18,12 +18,8 @@ public class SpigotModuleFactoryHelper {
     private final Map<Class<?>, SpigotModuleFactory<?>> factoriesCacheMap = new HashMap<>();
     private final ReflectionService reflectionService;
 
-    public <T extends SpigotModule<?, ?>> SpigotModuleFactory<T> of(Class<T> cls) {
-        return lookupFactory(cls);
-    }
-
     @SuppressWarnings("unchecked")
-    private <T extends SpigotModule<?, ?>> SpigotModuleFactory<T> lookupFactory(Class<T> cls) {
+    public <T extends SpigotModule<?, ?>> SpigotModuleFactory<T> of(Class<T> cls) {
         return (SpigotModuleFactory<T>) factoriesCacheMap.computeIfAbsent(cls, f -> createFactory(cls));
     }
 
@@ -53,9 +49,8 @@ public class SpigotModuleFactoryHelper {
     private <T> T newConstructorInstance(Class<T> cls) {
         return reflectionService.constructInstance(
                 SpigotMetadata.create()
-                        .with(ConstructInstanceHandler.THROW_EXCEPTION.clone(false))
-                        .with(ConstructInstanceHandler.TARGET_CLASS.clone(cls))
-        );
+                        .with(ConstructInstanceHandler.THROW_EXCEPTION, false)
+                        .with(ConstructInstanceHandler.TARGET_CLASS, cls));
     }
 
     @RequiredArgsConstructor

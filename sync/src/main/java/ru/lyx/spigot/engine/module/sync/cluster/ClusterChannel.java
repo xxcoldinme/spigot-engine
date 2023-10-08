@@ -19,9 +19,7 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class ClusterChannel implements TransportChannel {
 
-    private static final Logger LOGGER = Logger.getLogger("ClusterChannel");
-    private static final ReflectionService REFLECTION_SERVICE = new ReflectionService(LOGGER);
-
+    private final ReflectionService reflectionService;
     private final TransportManager transportManager;
     private final SocketChannel socketChannel;
 
@@ -74,7 +72,7 @@ public class ClusterChannel implements TransportChannel {
             final AttachmentContainer<TransportConsumer<?>> consumers
                     = subscribedQueuesMap.get(transportObject.getQueue());
 
-            System.out.println("Consumers" + consumers);
+            System.out.println("Consumers = " + consumers); // debugging for tests.
 
             consumers.getDefinitions()
                     .forEach(transportConsumer -> {
@@ -92,10 +90,10 @@ public class ClusterChannel implements TransportChannel {
         }
 
         private Class<?> getMessageType(TransportConsumer<?> consumer) {
-            return REFLECTION_SERVICE.getGenericType(
+            return reflectionService.getGenericType(
                     SpigotMetadata.create()
-                            .with(GetGenericTypeHandler.TARGET_CLASS, consumer.getClass())
-                            .with(GetGenericTypeHandler.GENERIC_TYPE_INDEX, 0));
+                            .with(GetGenericTypeHandler.GENERIC_TYPE_INDEX, 0)
+                            .with(GetGenericTypeHandler.TARGET_CLASS, consumer.getClass()));
         }
     }
 }

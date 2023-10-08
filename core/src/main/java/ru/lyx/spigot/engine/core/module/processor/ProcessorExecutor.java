@@ -7,12 +7,8 @@ import ru.lyx.spigot.engine.core.SpigotContext;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
-import ru.lyx.spigot.engine.core.module.processor.transaction.LinkedProcessor;
 import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.logging.Logger;

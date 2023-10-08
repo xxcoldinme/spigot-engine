@@ -19,8 +19,8 @@ public class LinkedProcessor {
     public SpigotModuleProcessor<?, ?> newProcessorInstance(ReflectionService reflectionService) {
         return reflectionService.constructInstance(
                 SpigotMetadata.create()
-                        .with(ConstructInstanceHandler.THROW_EXCEPTION.clone(true))
-                        .with(ConstructInstanceHandler.TARGET_CLASS.clone(processorClass)));
+                        .with(ConstructInstanceHandler.THROW_EXCEPTION, true)
+                        .with(ConstructInstanceHandler.TARGET_CLASS, processorClass));
     }
 
     public SpigotModuleProcessor<?, ?> lookupCached(AttachmentContainer<SpigotModuleProcessor<?, ?>> processors) {

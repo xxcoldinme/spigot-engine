@@ -43,8 +43,9 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
             try {
                 for ( ;; ) {
                     Socket incomingSocket = socket.accept();
-
                     incomingSocketsList.add(incomingSocket);
+
+                    // ForkJoinPool parallelism of tasks.
                     executorService.submit(() -> super.handleDataReceiving(incomingSocket, channel));
                 }
             }

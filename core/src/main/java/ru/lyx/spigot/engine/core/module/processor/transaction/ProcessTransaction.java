@@ -19,7 +19,7 @@ public class ProcessTransaction {
         return new ProcessTransaction(attachmentContainer, SpigotMetadata.create());
     }
 
-    private final AttachmentContainer<SpigotModuleProcessor<?, ?>> attachmentContainer;
+    private final AttachmentContainer<SpigotModuleProcessor<?, ?>> totalProcessors;
     private final SpigotMetadata metadata;
 
     private LinkedProcessor next;
