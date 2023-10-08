@@ -48,7 +48,7 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
                     .handleConnect(channel, config);
         } else {
             channel.setHandler(this);
-            channel.setState(SocketState.HANDSHAKE);
+            channel.setState(SocketState.ACTIVE);
 
             executorService.submit(() -> super.handleAutoDisconnect(socket, channel));
             executorService.submit(() -> super.handleDataReceiving(socket, channel));
