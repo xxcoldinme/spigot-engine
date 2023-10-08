@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -100,5 +99,10 @@ public class PluginAttachmentContainer<T> {
 
     private PluginProperty<T> property(Plugin plugin, T definition) {
         return new PluginProperty<>(plugin, definition);
+    }
+
+    @Override
+    public String toString() {
+        return parent.getDefinitions().toString();
     }
 }

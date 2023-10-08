@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("unchecked")
 @Getter
-@ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor
 public class AttachmentContainer<T> {
@@ -69,5 +68,10 @@ public class AttachmentContainer<T> {
 
     public Optional<T> findFirst(@NotNull Predicate<T> predicate) {
         return definitions.stream().filter(predicate).findFirst();
+    }
+
+    @Override
+    public String toString() {
+        return definitions.toString();
     }
 }

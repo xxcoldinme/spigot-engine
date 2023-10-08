@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class KeyProperty<T> {
@@ -26,5 +25,10 @@ public class KeyProperty<T> {
 
     public void set(T val) {
         currentValue.set(val);
+    }
+
+    @Override
+    public String toString() {
+        return currentValue.get().toString();
     }
 }

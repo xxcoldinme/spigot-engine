@@ -6,8 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
-@ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class PluginProperty<T> {
 
@@ -15,8 +14,11 @@ public class PluginProperty<T> {
         return new PluginProperty<>(plugin, definition);
     }
 
-    @EqualsAndHashCode.Include
     private final Plugin plugin;
-
     private final T definition;
+
+    @Override
+    public String toString() {
+        return definition.toString();
+    }
 }
