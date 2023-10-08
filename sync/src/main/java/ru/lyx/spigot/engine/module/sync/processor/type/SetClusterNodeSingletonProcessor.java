@@ -25,7 +25,7 @@ public class SetClusterNodeSingletonProcessor implements SpigotModuleProcessor<S
         final ProcessTransaction previousTransaction = context.getPreviousTransaction();
         final SpigotMetadata metadata = previousTransaction.getMetadata();
 
-        metadata.<TransportChannel>get(KeyProperty.of(SyncProcessorMetadataKeys.CHANNEL))
+        metadata.<TransportChannel>get(SyncProcessorMetadataKeys.CHANNEL)
                 .ifPresent(channel -> {
 
                     context.getModuleContext().setChannel(channel);

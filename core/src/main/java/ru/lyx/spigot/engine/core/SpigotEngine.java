@@ -43,7 +43,7 @@ public final class SpigotEngine {
         Logger logger = server.getLogger();
 
         ReflectionService reflectionService = new ReflectionService(logger);
-        ProcessorExecutor processorExecutor = new ProcessorExecutor(logger, this, reflectionService);
+        ProcessorExecutor processorExecutor = new ProcessorExecutor(logger, this);
 
         // ----------------------------------------------------------------------------------- //
         container = new SpigotContainer();

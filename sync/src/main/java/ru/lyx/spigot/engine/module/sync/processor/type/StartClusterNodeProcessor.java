@@ -24,7 +24,7 @@ public class StartClusterNodeProcessor implements SpigotModuleProcessor<SyncModu
         final ProcessTransaction previousTransaction = context.getPreviousTransaction();
         final SpigotMetadata metadata = previousTransaction.getMetadata();
 
-        metadata.<ClusterChannel>get(KeyProperty.of(SyncProcessorMetadataKeys.CHANNEL))
+        metadata.<ClusterChannel>get(SyncProcessorMetadataKeys.CHANNEL)
                 .ifPresent(channel -> {
 
                     channel.start();

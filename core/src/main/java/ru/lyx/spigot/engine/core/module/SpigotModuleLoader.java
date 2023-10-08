@@ -1,6 +1,7 @@
 package ru.lyx.spigot.engine.core.module;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
@@ -77,13 +78,18 @@ public class SpigotModuleLoader {
                 .findFirst();
     }
 
+    @SneakyThrows
     private void loadModel(KeyProperty<String> keyID, SpigotConfigModel model) {
-        Path configPath = getModuleFolder(keyID).resolve(MODULE_INI_CONF_NAME);
+        Path moduleFolder = getModuleFolder(keyID);
+        Path configPath = moduleFolder.resolve(MODULE_INI_CONF_NAME);
+
         if (!Files.exists(configPath)) {
-            return;
+
+            Files.createDirectories(moduleFolder);
+            Files.copy(SpigotEngine.class.getResourceAsStream("/" + keyID + "/" + MODULE_INI_CONF_NAME), configPath);
         }
 
-        logger.info(format("Module '%s' ini configuration merge to model - %s", keyID,
+        logger.info(format("Module '%s' .ini configuration merge to model - %s", keyID,
                 model.getClass().getSimpleName()));
 
         SettingConfig settingConfig = engine.loadConfig(configPath);

@@ -22,7 +22,7 @@ public class WorldClearingHandler implements SpigotHandler<WorldModule> {
 
         if (context.getTrigger() == SpigotHandlingTrigger.PLUGIN_REGISTERED) {
 
-            World bukkitWorld = context.getEngine().getServer().getWorld("world");
+            World bukkitWorld = context.getEngine().getServer().getWorld("worlds");
             WrappedWorld wrappedWorld = worldContext.createWrapper(
                     bukkitWorld
             );
