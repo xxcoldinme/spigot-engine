@@ -7,6 +7,7 @@ import ru.lyx.spigot.engine.core.metadata.MetadataProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class ConstructInstanceHandler<T> implements ReflectionHandler<T> {

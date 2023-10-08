@@ -6,8 +6,6 @@ import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.reflection.ConstructInstanceHandler;
 import ru.lyx.spigot.engine.core.reflection.ReflectionService;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -16,8 +14,6 @@ import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class SpigotModuleFactoryHelper {
-
-    private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
 
     private final Map<Class<?>, SpigotModuleFactory<?>> factoriesCacheMap = new HashMap<>();
     private final ReflectionService reflectionService;
@@ -40,24 +36,18 @@ public class SpigotModuleFactoryHelper {
         return (factory::createInstance);
     }
 
-    private <T> FactoryMethod<T> findFactory(Class<T> cls) {
-        Method reflectMethod = Stream.of(cls.getMethods())
-                .filter(method -> (method.getModifiers() & Modifier.STATIC) == Modifier.STATIC)
+    private <T extends SpigotModule<?, ?>> FactoryMethod<T> findFactory(Class<T> cls) {
+        Method reflectMethod = Stream.of(cls.getDeclaredMethods())
+                .filter(method -> Modifier.isStatic(method.getModifiers()))
                 .filter(method -> method.isAnnotationPresent(Factory.class))
                 .findFirst()
                 .orElse(null);
 
-        if (reflectMethod == null) {
+        if (reflectMethod == null)
             return null;
-        }
 
-        try {
-            MethodHandle handler = LOOKUP.unreflect(reflectMethod);
-            return new FactoryMethod<>(handler);
-        }
-        catch (IllegalAccessException exception) {
-            throw new SpigotEngineException(exception);
-        }
+        reflectMethod.setAccessible(true);
+        return new FactoryMethod<>(reflectMethod);
     }
 
     private <T> T newConstructorInstance(Class<T> cls) {
@@ -69,14 +59,17 @@ public class SpigotModuleFactoryHelper {
     }
 
     @RequiredArgsConstructor
-    private static class FactoryMethod<T> {
+    private static class FactoryMethod<T extends SpigotModule<?, ?>> {
 
-        private final MethodHandle handler;
+        private final Method factoryMethod;
 
         @SuppressWarnings("unchecked")
         public T createInstance() {
             try {
-                return (T) handler.invoke();
+                SpigotModuleFactory<T> factory = (SpigotModuleFactory<T>)
+                        factoryMethod.invoke(null);
+
+                return factory.create();
             }
             catch (Throwable ex) {
                 throw new SpigotEngineException(ex);
