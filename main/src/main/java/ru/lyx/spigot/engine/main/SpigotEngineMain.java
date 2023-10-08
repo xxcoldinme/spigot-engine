@@ -1,13 +1,13 @@
 package ru.lyx.spigot.engine.main;
 
-import org.bukkit.Bukkit;
+import lombok.Getter;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
-import ru.lyx.spigot.engine.module.sync.SyncModule;
 import ru.lyx.spigot.engine.module.sync.ClusterChannel;
+import ru.lyx.spigot.engine.module.sync.SyncModule;
 import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
 import ru.lyx.spigot.engine.module.world.WorldModule;
 
@@ -18,10 +18,12 @@ public final class SpigotEngineMain extends JavaPlugin {
             = AttachmentContainer.of(
                     SyncModule.class, WorldModule.class);
 
-    private final SpigotEngine engine = new SpigotEngine(Bukkit.getServer(), getLogger());
+    @Getter
+    private SpigotEngine engine;
 
     @Override
     public void onLoad() {
+        engine = new SpigotEngine(getServer(), getLogger());
         engine.initEngine();
 
         TOTAL_MODULES.getDefinitions().forEach(engine::registerModule);
