@@ -1,7 +1,6 @@
 package ru.lyx.spigot.engine.core;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
@@ -42,11 +41,9 @@ public final class SpigotContainer {
 
     @Override
     public SpigotContainer clone() {
-        try {
-            return (SpigotContainer) super.clone();
-        }
-        catch (CloneNotSupportedException exception) {
-            throw new SpigotEngineException(exception);
-        }
+        SpigotContainer clone = new SpigotContainer();
+        clone.refill(this);
+
+        return clone;
     }
 }

@@ -39,11 +39,6 @@ public class MetadataProperty<T> {
 
     @Override
     public MetadataProperty<T> clone() {
-        try {
-            return (MetadataProperty<T>) super.clone();
-        }
-        catch (CloneNotSupportedException exception) {
-            throw new SpigotEngineException(exception);
-        }
+        return new MetadataProperty<>(key, value);
     }
 }

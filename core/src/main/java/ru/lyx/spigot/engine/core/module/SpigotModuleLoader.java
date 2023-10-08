@@ -45,6 +45,7 @@ public class SpigotModuleLoader {
 
     public void registerModule(@NotNull SpigotModuleFactory<?> factory) {
         final SpigotModule<?, ?> spigotModule = factory.create();
+        System.out.println("module - " + spigotModule.getClass());
 
         logger.info("Registered engine module - " + spigotModule.getKey());
         modulesMap.put(spigotModule.getKey(), spigotModule);

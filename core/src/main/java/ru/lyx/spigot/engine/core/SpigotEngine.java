@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
+import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
 import ru.lyx.spigot.engine.core.module.SpigotModuleFactoryHelper;
 import ru.lyx.spigot.engine.core.module.SpigotModuleLoader;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandlingService;
@@ -104,7 +105,9 @@ public final class SpigotEngine {
     }
 
     public void registerModule(Class<? extends SpigotModule<?, ?>> cls) {
-        moduleLoader.registerModule(moduleFactoryHelper.of(cls));
+        SpigotModuleFactory<? extends SpigotModule<?, ?>> spigotModuleFactory = moduleFactoryHelper.of(cls);
+        System.out.println(spigotModuleFactory);
+        moduleLoader.registerModule(spigotModuleFactory);
     }
 
     public void unregisterModule(Class<? extends SpigotModule<?, ?>> cls) {
