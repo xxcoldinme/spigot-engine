@@ -106,7 +106,6 @@ public final class SpigotEngine {
 
     public void registerModule(Class<? extends SpigotModule<?, ?>> cls) {
         SpigotModuleFactory<? extends SpigotModule<?, ?>> spigotModuleFactory = moduleFactoryHelper.of(cls);
-        System.out.println(spigotModuleFactory);
         moduleLoader.registerModule(spigotModuleFactory);
     }
 
