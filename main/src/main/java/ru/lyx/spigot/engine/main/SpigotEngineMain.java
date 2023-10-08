@@ -18,7 +18,7 @@ public final class SpigotEngineMain extends JavaPlugin {
             = AttachmentContainer.of(
                     SyncModule.class, WorldModule.class);
 
-    private final SpigotEngine engine = new SpigotEngine(Bukkit.getServer());
+    private final SpigotEngine engine = new SpigotEngine(Bukkit.getServer(), getLogger());
 
     @Override
     public void onLoad() {

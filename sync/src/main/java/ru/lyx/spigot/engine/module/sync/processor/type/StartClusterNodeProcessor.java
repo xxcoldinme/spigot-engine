@@ -12,6 +12,8 @@ import ru.lyx.spigot.engine.module.sync.SyncModule;
 import ru.lyx.spigot.engine.module.sync.cluster.ClusterChannel;
 import ru.lyx.spigot.engine.module.sync.processor.SyncProcessorMetadataKeys;
 
+import java.util.logging.Logger;
+
 public class StartClusterNodeProcessor implements SpigotModuleProcessor<SyncModule, SyncContext> {
 
     @Override
@@ -28,9 +30,7 @@ public class StartClusterNodeProcessor implements SpigotModuleProcessor<SyncModu
                 .ifPresent(channel -> {
 
                     channel.start();
-
-                    Server server = context.getEngine().getServer();
-                    server.getLogger().info("[SyncModule] Cluster node was started");
+                    context.getEngine().getLogger().info("Cluster node was started");
                 });
 
         return previousTransaction

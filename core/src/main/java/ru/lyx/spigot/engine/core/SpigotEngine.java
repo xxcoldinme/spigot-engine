@@ -32,6 +32,9 @@ public final class SpigotEngine {
     @Getter
     private final Server server;
 
+    @Getter
+    private final Logger logger;
+
     private SpigotContainer container;
     private SettingConfigLoader configLoader;
     private SpigotModuleLoader moduleLoader;
@@ -40,8 +43,6 @@ public final class SpigotEngine {
     private SpigotHandlingService handlingService;
 
     public void initEngine() {
-        Logger logger = server.getLogger();
-
         ReflectionService reflectionService = new ReflectionService(logger);
         ProcessorExecutor processorExecutor = new ProcessorExecutor(logger, this);
 
