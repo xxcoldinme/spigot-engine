@@ -2,7 +2,6 @@ package ru.lyx.spigot.engine.core.module;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.SpigotContext;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.module.processor.ProcessorExecutor;

@@ -5,16 +5,15 @@ import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.SpigotContext;
-import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.core.module.processor.transaction.LinkedProcessor;
 import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
-import ru.lyx.spigot.engine.core.reflection.GetGenericTypeHandler;
 import ru.lyx.spigot.engine.core.reflection.ReflectionService;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
@@ -35,18 +34,21 @@ public class ProcessorExecutor {
         final AttachmentContainer<SpigotModuleProcessor<?, ?>> processors
                 = module.ofProcessors(engine);
 
+        final AtomicReference<ProcessTransaction> transaction
+                = new AtomicReference<>(ProcessTransaction.create(processors));
+
         iterateContextLinks(processors,
                 processor -> {
-
-                    if (!isProcessorLinked(module, processor)) {
-                        return null;
-                    }
 
                     final ProcessorContext<T, C> processorContext = new ProcessorContext<>(engine, module, context);
                     final SpigotModuleProcessor<T, C> castedProcessor = (SpigotModuleProcessor<T, C>) processor;
 
+                    processorContext.setPreviousTransaction(transaction.get());
+
                     logger.info(format("Module '%s' has processing '%s'", module.getKey().get(), processor.getKey().get()));
-                    return castedProcessor.process(processorContext);
+
+                    transaction.set(castedProcessor.process(processorContext));
+                    return transaction.get();
                 });
     }
 
@@ -81,15 +83,5 @@ public class ProcessorExecutor {
         } while (current != null);
 
         cached = null;
-    }
-
-    private boolean isProcessorLinked(SpigotModule<?, ?> module, SpigotModuleProcessor<?, ?> processor) {
-        Class<Object> genericType = reflectionService.getGenericType(
-                SpigotMetadata.create()
-                        .with(GetGenericTypeHandler.GENERIC_TYPE_INDEX.clone(0))
-                        .with(GetGenericTypeHandler.TARGET_CLASS.clone(processor.getClass())));
-
-        Class<?> moduleClass = module.getClass();
-        return genericType.isAssignableFrom(moduleClass) || moduleClass.isAssignableFrom(genericType);
     }
 }
