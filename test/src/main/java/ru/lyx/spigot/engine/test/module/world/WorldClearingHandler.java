@@ -27,7 +27,7 @@ public class WorldClearingHandler implements SpigotHandler<WorldModule> {
                     bukkitWorld
             );
 
-            clear(wrappedWorld);
+            //clear(wrappedWorld); todo
         }
     }
 

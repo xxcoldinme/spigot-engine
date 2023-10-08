@@ -20,7 +20,7 @@ public class CreateClusterNodeProcessor implements SpigotModuleProcessor<SyncMod
 
     @Override
     public KeyProperty<String> getKey() {
-        return KeyProperty.of("ClusterChannelBootstrapProcessor");
+        return KeyProperty.of("CreateClusterNodeProcessor");
     }
 
     @Override

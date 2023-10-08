@@ -16,7 +16,7 @@ public class StartClusterNodeProcessor implements SpigotModuleProcessor<SyncModu
 
     @Override
     public KeyProperty<String> getKey() {
-        return KeyProperty.of("ClusterChannelConnectionAttemptsProcessor");
+        return KeyProperty.of("StartClusterNodeProcessor");
     }
 
     @Override

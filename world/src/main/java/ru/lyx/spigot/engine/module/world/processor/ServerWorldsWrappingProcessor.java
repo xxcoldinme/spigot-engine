@@ -16,7 +16,7 @@ public class ServerWorldsWrappingProcessor implements SpigotModuleProcessor<Worl
 
     @Override
     public KeyProperty<String> getKey() {
-        return KeyProperty.of("ServerWorldsRebuildProcessor");
+        return KeyProperty.of("ServerWorldsWrappingProcessor");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ServerWorldsWrappingProcessor implements SpigotModuleProcessor<Worl
                 .forEach(world -> {
 
                     WrappedWorld wrapper = worldContext.createWrapper(world);
-                    worldContext.store(wrapper);
+                    //worldContext.store(wrapper); todo
                 });
 
         return context.getPreviousTransaction();

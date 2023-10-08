@@ -17,7 +17,7 @@ public class SetClusterNodeSingletonProcessor implements SpigotModuleProcessor<S
 
     @Override
     public KeyProperty<String> getKey() {
-        return KeyProperty.of("ClusterChannelBootstrapProcessor");
+        return KeyProperty.of("SetClusterNodeSingletonProcessor");
     }
 
     @Override
