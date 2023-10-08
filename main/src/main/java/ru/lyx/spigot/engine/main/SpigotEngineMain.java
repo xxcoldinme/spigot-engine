@@ -7,6 +7,8 @@ import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.module.sync.SyncModule;
+import ru.lyx.spigot.engine.module.sync.cluster.ClusterChannel;
+import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
 import ru.lyx.spigot.engine.module.world.WorldModule;
 
 public final class SpigotEngineMain extends JavaPlugin {
@@ -29,5 +31,16 @@ public final class SpigotEngineMain extends JavaPlugin {
     public void onEnable() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new SpigotPluginListener(engine), this);
+    }
+
+    @Override
+    public void onDisable() {
+        SyncModule syncModule = engine.lookupModule(SyncModule.class);
+
+        TransportChannel channel = syncModule.getContext().getChannel();
+
+        if (channel != null) {
+            ((ClusterChannel) channel).shutdown();
+        }
     }
 }

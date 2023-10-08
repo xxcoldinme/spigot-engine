@@ -1,10 +1,8 @@
 package ru.lyx.spigot.engine.module.sync.cluster.socket.handler;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.SerializationUtils;
 import ru.lyx.spigot.engine.module.sync.SpigotSyncModuleException;
 import ru.lyx.spigot.engine.module.sync.SyncConfigModel;
-import ru.lyx.spigot.engine.module.sync.cluster.handshake.HandshakeResponse;
 import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketChannel;
 
 import java.io.IOException;
@@ -23,10 +21,9 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
 
     private ServerSocket socket;
     private final List<Socket> incomingSocketsList = new CopyOnWriteArrayList<>();
-    private final List<Socket> uninitializedSocketsList = new CopyOnWriteArrayList<>();
 
     @Override
-    public void handleConnect(SocketChannel channel, SyncConfigModel config) {
+    public synchronized void handleConnect(SocketChannel channel, SyncConfigModel config) {
         try {
             socket = new ServerSocket();
             socket.bind(config.getClusterAddress());
@@ -48,8 +45,6 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
                     Socket incomingSocket = socket.accept();
 
                     incomingSocketsList.add(incomingSocket);
-                    uninitializedSocketsList.add(incomingSocket);
-
                     executorService.submit(() -> super.handleDataReceiving(incomingSocket, channel));
                 }
             }
@@ -87,21 +82,6 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     protected void onDataReceived(Socket socket, SocketChannel channel, byte[] data) {
-        if (uninitializedSocketsList.contains(socket)) {
-            try {
-                OutputStream outputStream = socket.getOutputStream();
-                write(outputStream,
-                        SerializationUtils.serialize(new HandshakeResponse(incomingSocketsList.indexOf(socket))));
-
-                uninitializedSocketsList.remove(socket);
-            }
-            catch (IOException exception) {
-                handleDisconnect(socket, channel);
-            }
-
-            return;
-        }
-
         incomingSocketsList.remove(socket);
         handleDataSending(channel, data);
         incomingSocketsList.add(socket);

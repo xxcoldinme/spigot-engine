@@ -1,17 +1,14 @@
 package ru.lyx.spigot.engine.module.sync.cluster;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.SerializationUtils;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
-import ru.lyx.spigot.engine.module.sync.SpigotSyncModuleException;
-import ru.lyx.spigot.engine.module.sync.cluster.handshake.HandshakeRequest;
-import ru.lyx.spigot.engine.module.sync.cluster.handshake.HandshakeResponse;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketChannel;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketState;
 import ru.lyx.spigot.engine.core.reflection.GetGenericTypeHandler;
 import ru.lyx.spigot.engine.core.reflection.ReflectionService;
+import ru.lyx.spigot.engine.module.sync.SpigotSyncModuleException;
+import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketChannel;
+import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketState;
 import ru.lyx.spigot.engine.module.sync.transport.*;
 
 import java.util.Map;
@@ -22,9 +19,8 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class ClusterChannel implements TransportChannel {
 
-    private static final ReflectionService REFLECTION_SERVICE
-            = new ReflectionService(
-                    Logger.getLogger("ClusterChannel"));
+    private static final Logger LOGGER = Logger.getLogger("ClusterChannel");
+    private static final ReflectionService REFLECTION_SERVICE = new ReflectionService(LOGGER);
 
     private final TransportManager transportManager;
     private final SocketChannel socketChannel;
@@ -34,28 +30,10 @@ public class ClusterChannel implements TransportChannel {
 
     public void start() {
         socketChannel.start();
-
-        if (!socketChannel.isServer()) {
-            processHandshakeExchange();
-        }
     }
 
-    private void processHandshakeExchange() {
-        HandshakeRequest handshakeRequest = new HandshakeRequest();
-
-        socketChannel.sendData(SerializationUtils.serialize(handshakeRequest));
-        socketChannel.subscribe(bytes -> {
-
-            HandshakeResponse response = SerializationUtils.deserialize(bytes);
-            processHandshakeResponse(response);
-        });
-    }
-
-    private void processHandshakeResponse(HandshakeResponse response) {
-        socketChannel.setConnectionID(response.getNodeID());
-
-        socketChannel.resetConsumers();
-        socketChannel.setState(SocketState.HANDSHAKE);
+    public void shutdown() {
+        socketChannel.close();
     }
 
     private void subscribeQueue(@NotNull String queue, @NotNull TransportConsumer<?> consumer) {

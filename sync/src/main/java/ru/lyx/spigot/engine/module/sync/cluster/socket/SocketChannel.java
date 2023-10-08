@@ -33,16 +33,12 @@ public class SocketChannel {
     @Setter
     private SocketChannelHandler handler;
 
-    public boolean isServer() {
-        return !(handler instanceof ClientSocketChannelHandler);
-    }
-
     public void start() {
         final ClientSocketChannelHandler handler = new ClientSocketChannelHandler(executorService);
         handler.handleConnect(this, config);
     }
 
-    public void stop() {
+    public void close() {
         handler.handleClose(this);
     }
 

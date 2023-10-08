@@ -39,7 +39,7 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
     }
 
     @Override
-    public void handleConnect(SocketChannel channel, SyncConfigModel config) {
+    public synchronized void handleConnect(SocketChannel channel, SyncConfigModel config) {
         this.config = config;
         initSocket(config);
 
