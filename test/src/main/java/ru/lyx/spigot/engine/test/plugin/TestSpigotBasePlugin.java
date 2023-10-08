@@ -8,7 +8,7 @@ import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 import ru.lyx.spigot.engine.core.plugin.SpigotBasePlugin;
 import ru.lyx.spigot.engine.test.event.TestPlayerJoinQuitListener;
-import ru.lyx.spigot.engine.test.module.WorldClearingHandler;
+import ru.lyx.spigot.engine.test.module.world.WorldClearingHandler;
 
 public class TestSpigotBasePlugin extends SpigotBasePlugin {
 

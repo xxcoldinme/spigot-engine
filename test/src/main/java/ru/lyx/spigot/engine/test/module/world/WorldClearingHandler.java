@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.test.module;
+package ru.lyx.spigot.engine.test.module.world;
 
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;

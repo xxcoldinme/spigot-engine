@@ -1,0 +1,36 @@
+package ru.lyx.spigot.engine.test.module.sync;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
+import ru.lyx.spigot.engine.core.module.handler.SpigotHandlerContext;
+import ru.lyx.spigot.engine.core.module.sync.SyncContext;
+import ru.lyx.spigot.engine.core.module.sync.SyncModule;
+import ru.lyx.spigot.engine.core.module.sync.transport.TransportChannel;
+
+public class SyncMessageHandler implements SpigotHandler<SyncModule> {
+
+    @Override
+    public boolean validate(@NotNull SpigotHandlerContext<SyncModule> context) {
+        return ALWAYS;
+    }
+
+    @Override
+    public void handle(@NotNull SpigotHandlerContext<SyncModule> context) {
+        SyncContext syncContext = context.getModule().getContext();
+        TransportChannel channel = syncContext.getChannel();
+
+        channel.<TestSyncMessage>subscribe("levelChange", message -> {
+
+            String playerName = message.getPlayerName();
+            int newPlayerLevel = message.getNewPlayerLevel();
+
+            Player player = Bukkit.getPlayer(playerName);
+
+            if (player != null) {
+                player.setLevel(newPlayerLevel);
+            }
+        });
+    }
+}

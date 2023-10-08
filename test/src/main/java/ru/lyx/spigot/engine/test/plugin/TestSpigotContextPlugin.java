@@ -6,7 +6,7 @@ import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
 import ru.lyx.spigot.engine.core.plugin.SpigotContextPlugin;
 import ru.lyx.spigot.engine.test.event.TestPlayerJoinQuitListener;
-import ru.lyx.spigot.engine.test.module.WorldClearingHandler;
+import ru.lyx.spigot.engine.test.module.world.WorldClearingHandler;
 
 public class TestSpigotContextPlugin extends SpigotContextPlugin {
 
