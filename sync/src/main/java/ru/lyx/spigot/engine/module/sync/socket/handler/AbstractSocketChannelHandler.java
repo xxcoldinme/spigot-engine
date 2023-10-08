@@ -1,9 +1,9 @@
-package ru.lyx.spigot.engine.module.sync.cluster.socket.handler;
+package ru.lyx.spigot.engine.module.sync.socket.handler;
 
 import lombok.RequiredArgsConstructor;
-import ru.lyx.spigot.engine.module.sync.SpigotSyncModuleException;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketChannel;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketState;
+import ru.lyx.spigot.engine.module.sync.SpigotSyncException;
+import ru.lyx.spigot.engine.module.sync.socket.SocketChannel;
+import ru.lyx.spigot.engine.module.sync.socket.SocketState;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -84,7 +84,7 @@ public abstract class AbstractSocketChannelHandler implements SocketChannelHandl
                     onClose.run();
             }
             catch (IOException exception) {
-                throw new SpigotSyncModuleException(exception);
+                throw new SpigotSyncException(exception);
             }
         }
     }

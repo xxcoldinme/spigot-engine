@@ -1,6 +1,5 @@
-package ru.lyx.spigot.engine.module.sync.processor.type;
+package ru.lyx.spigot.engine.module.sync.processor;
 
-import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
@@ -9,15 +8,13 @@ import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
 import ru.lyx.spigot.engine.module.sync.SyncContext;
 import ru.lyx.spigot.engine.module.sync.SyncModule;
-import ru.lyx.spigot.engine.module.sync.processor.SyncProcessorMetadataKeys;
-import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
+import ru.lyx.spigot.engine.module.sync.ClusterChannel;
 
-@RequiredArgsConstructor
-public class SetClusterNodeSingletonProcessor implements SpigotModuleProcessor<SyncModule, SyncContext> {
+public class ClusterChannelStartProcessor implements SpigotModuleProcessor<SyncModule, SyncContext> {
 
     @Override
     public KeyProperty<String> getKey() {
-        return KeyProperty.of("SetClusterNodeSingletonProcessor");
+        return KeyProperty.of("StartClusterNodeProcessor");
     }
 
     @Override
@@ -25,12 +22,14 @@ public class SetClusterNodeSingletonProcessor implements SpigotModuleProcessor<S
         final ProcessTransaction previousTransaction = context.getPreviousTransaction();
         final SpigotMetadata metadata = previousTransaction.getMetadata();
 
-        metadata.<TransportChannel>get(SyncProcessorMetadataKeys.CHANNEL)
+        metadata.<ClusterChannel>get(SyncContext.CHANNEL_PROPERTY)
                 .ifPresent(channel -> {
 
-                    context.getModuleContext().setChannel(channel);
+                    channel.start();
+                    context.getEngine().getLogger().info("Cluster node was started");
                 });
 
-        return previousTransaction;
+        return previousTransaction
+                .thenContinueTo(ClusterChannelInitProcessor.class);
     }
 }

@@ -1,6 +1,6 @@
-package ru.lyx.spigot.engine.module.sync.processor.type;
+package ru.lyx.spigot.engine.module.sync.processor;
 
-import org.bukkit.Server;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
@@ -9,16 +9,14 @@ import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
 import ru.lyx.spigot.engine.module.sync.SyncContext;
 import ru.lyx.spigot.engine.module.sync.SyncModule;
-import ru.lyx.spigot.engine.module.sync.cluster.ClusterChannel;
-import ru.lyx.spigot.engine.module.sync.processor.SyncProcessorMetadataKeys;
+import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
 
-import java.util.logging.Logger;
-
-public class StartClusterNodeProcessor implements SpigotModuleProcessor<SyncModule, SyncContext> {
+@RequiredArgsConstructor
+public class ClusterChannelInitProcessor implements SpigotModuleProcessor<SyncModule, SyncContext> {
 
     @Override
     public KeyProperty<String> getKey() {
-        return KeyProperty.of("StartClusterNodeProcessor");
+        return KeyProperty.of("ClusterChannelInitProcessor");
     }
 
     @Override
@@ -26,14 +24,12 @@ public class StartClusterNodeProcessor implements SpigotModuleProcessor<SyncModu
         final ProcessTransaction previousTransaction = context.getPreviousTransaction();
         final SpigotMetadata metadata = previousTransaction.getMetadata();
 
-        metadata.<ClusterChannel>get(SyncProcessorMetadataKeys.CHANNEL)
+        metadata.<TransportChannel>get(SyncContext.CHANNEL_PROPERTY)
                 .ifPresent(channel -> {
 
-                    channel.start();
-                    context.getEngine().getLogger().info("Cluster node was started");
+                    context.getModuleContext().setChannel(channel);
                 });
 
-        return previousTransaction
-                .thenContinueTo(SetClusterNodeSingletonProcessor.class);
+        return previousTransaction;
     }
 }

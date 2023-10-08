@@ -1,11 +1,11 @@
-package ru.lyx.spigot.engine.module.sync.cluster.socket;
+package ru.lyx.spigot.engine.module.sync.socket;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.lyx.spigot.engine.module.sync.SyncConfigModel;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.handler.ClientSocketChannelHandler;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.handler.SocketChannelHandler;
+import ru.lyx.spigot.engine.module.sync.socket.handler.ClientSocketChannelHandler;
+import ru.lyx.spigot.engine.module.sync.socket.handler.SocketChannelHandler;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -4,5 +4,5 @@ import lombok.experimental.StandardException;
 import ru.lyx.spigot.engine.core.SpigotEngineException;
 
 @StandardException
-public class SpigotSyncModuleException extends SpigotEngineException {
+public class SpigotSyncException extends SpigotEngineException {
 }

@@ -1,7 +1,7 @@
-package ru.lyx.spigot.engine.module.sync.cluster.socket.handler;
+package ru.lyx.spigot.engine.module.sync.socket.handler;
 
 import ru.lyx.spigot.engine.module.sync.SyncConfigModel;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketChannel;
+import ru.lyx.spigot.engine.module.sync.socket.SocketChannel;
 
 public interface SocketChannelHandler {
 

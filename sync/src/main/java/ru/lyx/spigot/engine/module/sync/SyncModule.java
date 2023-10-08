@@ -8,9 +8,9 @@ import ru.lyx.spigot.engine.core.module.Factory;
 import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
 import ru.lyx.spigot.engine.core.module.SpigotModuleTypes;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
-import ru.lyx.spigot.engine.module.sync.processor.type.CreateClusterNodeProcessor;
-import ru.lyx.spigot.engine.module.sync.processor.type.SetClusterNodeSingletonProcessor;
-import ru.lyx.spigot.engine.module.sync.processor.type.StartClusterNodeProcessor;
+import ru.lyx.spigot.engine.module.sync.processor.CreateClusterChannelProcessor;
+import ru.lyx.spigot.engine.module.sync.processor.ClusterChannelInitProcessor;
+import ru.lyx.spigot.engine.module.sync.processor.ClusterChannelStartProcessor;
 
 public class SyncModule extends AbstractSpigotModule<SyncContext, SyncConfigModel> {
 
@@ -26,9 +26,9 @@ public class SyncModule extends AbstractSpigotModule<SyncContext, SyncConfigMode
     @Override
     public AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine) {
         return AttachmentContainer.of(
-                new CreateClusterNodeProcessor(),
-                new StartClusterNodeProcessor(),
-                new SetClusterNodeSingletonProcessor()
+                new CreateClusterChannelProcessor(),
+                new ClusterChannelStartProcessor(),
+                new ClusterChannelInitProcessor()
         );
     }
 

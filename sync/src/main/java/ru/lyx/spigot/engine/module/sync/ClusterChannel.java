@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.module.sync.cluster;
+package ru.lyx.spigot.engine.module.sync;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -6,15 +6,13 @@ import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.reflection.GetGenericTypeHandler;
 import ru.lyx.spigot.engine.core.reflection.ReflectionService;
-import ru.lyx.spigot.engine.module.sync.SpigotSyncModuleException;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketChannel;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketState;
+import ru.lyx.spigot.engine.module.sync.socket.SocketChannel;
+import ru.lyx.spigot.engine.module.sync.socket.SocketState;
 import ru.lyx.spigot.engine.module.sync.transport.*;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 public class ClusterChannel implements TransportChannel {
@@ -41,7 +39,7 @@ public class ClusterChannel implements TransportChannel {
 
     private void validateTransportOperation() {
         if (socketChannel.getState() != SocketState.ACTIVE) {
-            throw new SpigotSyncModuleException("channel state is not active");
+            throw new SpigotSyncException("channel state is not active");
         }
     }
 

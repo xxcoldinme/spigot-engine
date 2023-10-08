@@ -1,9 +1,9 @@
-package ru.lyx.spigot.engine.module.sync.cluster.socket.handler;
+package ru.lyx.spigot.engine.module.sync.socket.handler;
 
 import lombok.RequiredArgsConstructor;
 import ru.lyx.spigot.engine.module.sync.SyncConfigModel;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketChannel;
-import ru.lyx.spigot.engine.module.sync.cluster.socket.SocketState;
+import ru.lyx.spigot.engine.module.sync.socket.SocketChannel;
+import ru.lyx.spigot.engine.module.sync.socket.SocketState;
 
 import java.io.IOException;
 import java.io.OutputStream;

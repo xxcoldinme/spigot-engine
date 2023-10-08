@@ -3,7 +3,7 @@ package ru.lyx.spigot.engine.module.sync.transport;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.SerializationUtils;
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.module.sync.SpigotSyncModuleException;
+import ru.lyx.spigot.engine.module.sync.SpigotSyncException;
 import ru.lyx.spigot.engine.module.sync.util.GZipCompressor;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class TransportManager {
             return compressor.compress(bytes);
         }
         catch (IOException exception) {
-            throw new SpigotSyncModuleException(exception);
+            throw new SpigotSyncException(exception);
         }
     }
 
@@ -30,7 +30,7 @@ public class TransportManager {
             return SerializationUtils.deserialize(decompressedBytes);
         }
         catch (IOException | DataFormatException e) {
-            throw new SpigotSyncModuleException(e);
+            throw new SpigotSyncException(e);
         }
     }
 }

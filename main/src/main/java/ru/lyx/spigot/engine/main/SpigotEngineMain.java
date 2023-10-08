@@ -7,7 +7,7 @@ import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.module.sync.SyncModule;
-import ru.lyx.spigot.engine.module.sync.cluster.ClusterChannel;
+import ru.lyx.spigot.engine.module.sync.ClusterChannel;
 import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
 import ru.lyx.spigot.engine.module.world.WorldModule;
 
