@@ -29,6 +29,10 @@ public class SpigotMetadata {
         return this;
     }
 
+    public <T> SpigotMetadata with(@NotNull MetadataProperty<T> property, @Nullable T value) {
+        return with(property.clone(value));
+    }
+
     public SpigotMetadata with(@NotNull KeyProperty<?> keyProperty, @Nullable Object value) {
         container.add(MetadataProperty.of(keyProperty, value));
         return this;

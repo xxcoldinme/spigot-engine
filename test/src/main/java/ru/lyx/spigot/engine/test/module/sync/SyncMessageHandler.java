@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandlerContext;
-import ru.lyx.spigot.engine.core.module.sync.SyncContext;
-import ru.lyx.spigot.engine.core.module.sync.SyncModule;
-import ru.lyx.spigot.engine.core.module.sync.transport.TransportChannel;
+import ru.lyx.spigot.engine.module.sync.SyncContext;
+import ru.lyx.spigot.engine.module.sync.SyncModule;
+import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
 
 public class SyncMessageHandler implements SpigotHandler<SyncModule> {
 

@@ -2,10 +2,10 @@ package ru.lyx.spigot.engine.module.sync.test;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import ru.lyx.spigot.engine.core.module.sync.transport.TransportManager;
-import ru.lyx.spigot.engine.core.module.sync.transport.TransportMessage;
-import ru.lyx.spigot.engine.core.module.sync.transport.TransportObject;
-import ru.lyx.spigot.engine.core.module.sync.util.GZipCompressor;
+import ru.lyx.spigot.engine.module.sync.transport.TransportManager;
+import ru.lyx.spigot.engine.module.sync.transport.TransportMessage;
+import ru.lyx.spigot.engine.module.sync.transport.TransportObject;
+import ru.lyx.spigot.engine.module.sync.util.GZipCompressor;
 
 public class TransportObjectTest {
 

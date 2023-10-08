@@ -6,8 +6,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
-import ru.lyx.spigot.engine.core.module.sync.SyncModule;
-import ru.lyx.spigot.engine.core.module.world.WorldModule;
+import ru.lyx.spigot.engine.module.sync.SyncModule;
+import ru.lyx.spigot.engine.module.world.WorldModule;
 
 public final class SpigotEngineMain extends JavaPlugin {
 

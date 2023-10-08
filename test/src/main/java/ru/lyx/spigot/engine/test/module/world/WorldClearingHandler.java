@@ -5,9 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandlerContext;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandlingTrigger;
-import ru.lyx.spigot.engine.core.module.world.WorldContext;
-import ru.lyx.spigot.engine.core.module.world.WorldModule;
-import ru.lyx.spigot.engine.core.module.world.model.WrappedWorld;
+import ru.lyx.spigot.engine.module.world.WorldContext;
+import ru.lyx.spigot.engine.module.world.WorldModule;
+import ru.lyx.spigot.engine.module.world.model.WrappedWorld;
 
 public class WorldClearingHandler implements SpigotHandler<WorldModule> {
 
