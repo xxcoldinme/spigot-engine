@@ -4,7 +4,7 @@ import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandlerContext;
-import ru.lyx.spigot.engine.core.module.handler.SpigotHandlingTrigger;
+import ru.lyx.spigot.engine.core.module.handler.SpigotHandleTrigger;
 import ru.lyx.spigot.engine.module.world.WorldContext;
 import ru.lyx.spigot.engine.module.world.WorldModule;
 import ru.lyx.spigot.engine.module.world.model.WrappedWorld;
@@ -20,7 +20,7 @@ public class WorldClearingHandler implements SpigotHandler<WorldModule> {
     public void handle(@NotNull SpigotHandlerContext<WorldModule> context) {
         WorldContext worldContext = context.getModule().getContext();
 
-        if (context.getTrigger() == SpigotHandlingTrigger.PLUGIN_REGISTERED) {
+        if (context.getTrigger() == SpigotHandleTrigger.PLUGIN_REGISTERED) {
 
             World bukkitWorld = context.getEngine().getServer().getWorld("worlds");
             WrappedWorld wrappedWorld = worldContext.createWrapper(

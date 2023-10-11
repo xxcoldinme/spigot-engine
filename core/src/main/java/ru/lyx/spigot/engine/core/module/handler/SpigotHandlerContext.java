@@ -14,7 +14,7 @@ import ru.lyx.spigot.engine.core.module.SpigotModule;
 @RequiredArgsConstructor
 public class SpigotHandlerContext<T extends SpigotModule<?, ?>> {
 
-    private final SpigotHandlingTrigger trigger;
+    private final SpigotHandleTrigger trigger;
     private final SpigotEngine engine;
     private final SpigotMetadata metadata;
     private final T module;

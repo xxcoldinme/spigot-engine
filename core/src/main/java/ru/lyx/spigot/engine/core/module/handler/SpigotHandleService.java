@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class SpigotHandlingService {
+public class SpigotHandleService {
 
     private final SpigotEngine engine;
     private final SpigotContainer container;
@@ -51,7 +51,7 @@ public class SpigotHandlingService {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends SpigotModule<?, ?>> void sendHandlerGeneric(SpigotHandler<T> handler, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    private <T extends SpigotModule<?, ?>> void sendHandlerGeneric(SpigotHandler<T> handler, SpigotHandleTrigger trigger, SpigotMetadata metadata) {
         final Class<T> parentClass = (Class<T>) lookupParentModule(handler.getClass());
         final T spigotModule = engine.lookupModule(parentClass);
 
@@ -62,20 +62,20 @@ public class SpigotHandlingService {
         }
     }
 
-    private void sendHandler(PocketContainer<SpigotHandler<?>> handlers, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    private void sendHandler(PocketContainer<SpigotHandler<?>> handlers, SpigotHandleTrigger trigger, SpigotMetadata metadata) {
         handlers.getElements()
                 .forEach(spigotModuleHandler -> sendHandlerGeneric(spigotModuleHandler, trigger, metadata));
     }
 
-    public void sendTotalHandler(SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    public void sendTotalHandler(SpigotHandleTrigger trigger, SpigotMetadata metadata) {
         sendHandler(getTotalHandlers(), trigger, metadata);
     }
 
-    public void sendPluginHandler(Plugin plugin, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    public void sendPluginHandler(Plugin plugin, SpigotHandleTrigger trigger, SpigotMetadata metadata) {
         sendHandler(getPluginHandlers(plugin), trigger, metadata);
     }
 
-    public void sendModuleHandler(Class<? extends SpigotModule<?, ?>> cls, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    public void sendModuleHandler(Class<? extends SpigotModule<?, ?>> cls, SpigotHandleTrigger trigger, SpigotMetadata metadata) {
         sendHandler(getModuleHandlers(cls), trigger, metadata);
     }
 

@@ -11,8 +11,8 @@ import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
 import ru.lyx.spigot.engine.core.module.SpigotModuleFactoryHelper;
 import ru.lyx.spigot.engine.core.module.SpigotModuleLoader;
-import ru.lyx.spigot.engine.core.module.handler.SpigotHandlingService;
-import ru.lyx.spigot.engine.core.module.handler.SpigotHandlingTrigger;
+import ru.lyx.spigot.engine.core.module.handler.SpigotHandleService;
+import ru.lyx.spigot.engine.core.module.handler.SpigotHandleTrigger;
 import ru.lyx.spigot.engine.core.module.processor.ProcessorExecutor;
 import ru.lyx.spigot.engine.core.plugin.SpigotContextPlugin;
 import ru.lyx.spigot.engine.core.plugin.SpigotPluginContainer;
@@ -39,7 +39,7 @@ public final class SpigotEngine {
     private SpigotModuleLoader moduleLoader;
     private SpigotModuleFactoryHelper moduleFactoryHelper;
     private SpigotPluginContainer pluginContainer;
-    private SpigotHandlingService handlingService;
+    private SpigotHandleService handlingService;
 
     public void initEngine() {
         ReflectionService reflectionService = new ReflectionService(logger);
@@ -52,7 +52,7 @@ public final class SpigotEngine {
         moduleLoader = new SpigotModuleLoader(this, processorExecutor, logger);
         moduleFactoryHelper = new SpigotModuleFactoryHelper(reflectionService);
         pluginContainer = new SpigotPluginContainer(logger);
-        handlingService = new SpigotHandlingService(this, container, reflectionService);
+        handlingService = new SpigotHandleService(this, container, reflectionService);
         // ----------------------------------------------------------------------------------- //
     }
 
@@ -74,7 +74,7 @@ public final class SpigotEngine {
         pluginContainer.addPlugin(plugin);
 
         plugin.registerPlugin(this);
-        sendPluginEmptyHandler(plugin, SpigotHandlingTrigger.PLUGIN_REGISTERED);
+        sendPluginEmptyHandler(plugin, SpigotHandleTrigger.PLUGIN_REGISTERED);
     }
 
     public void unregisterPlugin(@NotNull SpigotContextPlugin plugin) {
@@ -83,32 +83,32 @@ public final class SpigotEngine {
         }
 
         pluginContainer.removePlugin(plugin);
-        sendPluginEmptyHandler(plugin, SpigotHandlingTrigger.PLUGIN_UNREGISTERED);
+        sendPluginEmptyHandler(plugin, SpigotHandleTrigger.PLUGIN_UNREGISTERED);
 
         removePluginData(plugin);
     }
 
-    public void sendTotalHandler(SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    public void sendTotalHandler(SpigotHandleTrigger trigger, SpigotMetadata metadata) {
         handlingService.sendTotalHandler(trigger, metadata);
     }
 
-    public void sendTotalEmptyHandler(SpigotHandlingTrigger trigger) {
+    public void sendTotalEmptyHandler(SpigotHandleTrigger trigger) {
         handlingService.sendTotalHandler(trigger, SpigotMetadata.create());
     }
 
-    public void sendPluginHandler(Plugin plugin, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    public void sendPluginHandler(Plugin plugin, SpigotHandleTrigger trigger, SpigotMetadata metadata) {
         handlingService.sendPluginHandler(plugin, trigger, metadata);
     }
 
-    public void sendPluginEmptyHandler(Plugin plugin, SpigotHandlingTrigger trigger) {
+    public void sendPluginEmptyHandler(Plugin plugin, SpigotHandleTrigger trigger) {
         handlingService.sendPluginHandler(plugin, trigger, SpigotMetadata.create());
     }
 
-    public void sendModuleHandler(Class<? extends SpigotModule<?, ?>> cls, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+    public void sendModuleHandler(Class<? extends SpigotModule<?, ?>> cls, SpigotHandleTrigger trigger, SpigotMetadata metadata) {
         handlingService.sendModuleHandler(cls, trigger, metadata);
     }
 
-    public void sendModuleEmptyHandler(Class<? extends SpigotModule<?, ?>> cls, SpigotHandlingTrigger trigger) {
+    public void sendModuleEmptyHandler(Class<? extends SpigotModule<?, ?>> cls, SpigotHandleTrigger trigger) {
         handlingService.sendModuleHandler(cls, trigger, SpigotMetadata.create());
     }
 
