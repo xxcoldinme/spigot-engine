@@ -34,7 +34,7 @@ public abstract class AbstractClusterNodeTest {
                 socketChannel
         );
 
-        channel.start(new BytesToMessageConsumer(clusterQueueManager, transportManager));
+        channel.start(new BytesToMessageConsumer(logger, clusterQueueManager, transportManager));
 
         channel.subscribe("TEST", System.out::println);
         readConsoleInputs(channel);

@@ -8,9 +8,12 @@ import ru.lyx.spigot.engine.module.sync.transport.TransportObject;
 import ru.lyx.spigot.engine.module.sync.transport.message.TransportMessage;
 
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 public class BytesToMessageConsumer implements Consumer<byte[]> {
+
+    private final Logger logger;
 
     private final ClusterQueueManager clusterQueueManager;
     private final TransportManager transportManager;
@@ -28,5 +31,10 @@ public class BytesToMessageConsumer implements Consumer<byte[]> {
                     TransportMessage message = transportObject.getMessage();
                     ((TransportConsumer<TransportMessage>) consumer).handle(message);
                 });
+
+        if (logger != null) {
+            logger.info(String.format("Node was handled message \"%s\" for queue \"%s\" at %d times.",
+                    transportObject.getMessage(), transportObject.getQueue(), consumersContainer.size()));
+        }
     }
 }

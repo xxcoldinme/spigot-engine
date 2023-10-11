@@ -74,10 +74,6 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     public void handleDataSending(SocketChannel channel, byte[] data) {
-        if (config.isClusterDebugEnabled()) {
-            logger.info("Cluster client-socket handle data sending");
-        }
-
         try {
             OutputStream outputStream = socket.getOutputStream();
             outputStream.write(data);
@@ -92,7 +88,6 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
     @Override
     protected void handleDisconnect(Socket socket, SocketChannel channel) {
         logger.info("Cluster client-socket has dropped connection with server, try reconnect...");
-
         handleConnect(channel, config);
 
         if (exceptionallyBytes != null) {
@@ -104,8 +99,6 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     protected void onDataReceived(Socket socket, SocketChannel channel, byte[] data) {
-        logger.info("Cluster client-socket handle data receiving");
-
         executorService.submit(() -> super.handleAutoDisconnect(socket, channel));
     }
 }

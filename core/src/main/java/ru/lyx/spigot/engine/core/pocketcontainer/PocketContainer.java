@@ -178,6 +178,10 @@ public class PocketContainer<T> implements Serializable {
         return new PocketContainer<U>(new List[]{map}, useChunks);
     }
 
+    public int size() {
+        return ofStream().mapToInt(Collection::size).sum();
+    }
+
     @Override
     public String toString() {
         return Arrays.toString(chunks);

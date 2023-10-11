@@ -81,8 +81,6 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     public void handleDataSending(SocketChannel channel, byte[] data) {
-        logger.info("Cluster server-socket handle data sending");
-
         for (Socket socket : new ArrayList<>(incomingSocketsList)) {
             try {
                 OutputStream outputStream = socket.getOutputStream();
@@ -101,8 +99,6 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     protected void onDataReceived(Socket socket, SocketChannel channel, byte[] data) {
-        logger.info("Cluster server-socket handle data receiving");
-
         incomingSocketsList.remove(socket);
         handleDataSending(channel, data);
         incomingSocketsList.add(socket);
