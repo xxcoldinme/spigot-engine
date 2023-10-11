@@ -26,8 +26,7 @@ public final class SettingConfigModelContext {
     }
 
     public void apply(SettingConfig config) {
-        new ArrayList<>(propertiesContainer.getElements())
-                .forEach(property -> applySetter(config, property));
+        propertiesContainer.forEach(property -> applySetter(config, property));
     }
 
     private <F> void applySetter(SettingConfig config, ConfigContextProperty<F> property) {

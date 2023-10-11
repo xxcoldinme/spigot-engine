@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,7 +20,7 @@ public class PocketContainer<T> implements Serializable {
     private static final int CHUNK_SIZE = Byte.MAX_VALUE;
 
     public static <T> PocketContainer<T> chunkify() {
-        return new PocketContainer<T>(new List[0], true);
+        return new PocketContainer<T>(new List[1], true);
     }
 
     public static <T> PocketContainer<T> empty() {
@@ -86,8 +87,15 @@ public class PocketContainer<T> implements Serializable {
         }
     }
 
+    private void cleanEmpties() {
+        chunks = Stream.of(chunks)
+                .filter(chunk -> !chunk.isEmpty())
+                .toArray(List[]::new);
+    }
+
     public PocketContainer<T> remove(T element) {
         peekChunk(element).remove(element);
+        cleanEmpties();
         return this;
     }
 
@@ -122,32 +130,29 @@ public class PocketContainer<T> implements Serializable {
         return addAll(other);
     }
 
-    public Collection<T> find(@NotNull Predicate<T> predicate) {
-        Stream<List<T>> stream = useChunks
+    private Stream<List<T>> ofStream() {
+        return useChunks
                 ? Stream.of(chunks).parallel()
                 : Stream.of(chunks);
+    }
 
+    public Collection<T> find(@NotNull Predicate<T> predicate) {
+        final Stream<List<T>> stream = ofStream();
         return stream.flatMap(Collection::stream)
                 .filter(predicate)
                 .collect(Collectors.toList());
     }
 
     public Optional<T> findFirst(@NotNull Predicate<T> predicate) {
-        Stream<List<T>> stream = useChunks
-                ? Stream.of(chunks).parallel()
-                : Stream.of(chunks);
-
+        final Stream<List<T>> stream = ofStream();
         return stream.flatMap(Collection::stream)
                 .filter(predicate)
                 .findFirst();
     }
 
     public void forEach(Consumer<T> consumer) {
-        Stream<List<T>> stream = useChunks
-                ? Stream.of(chunks).parallel()
-                : Stream.of(chunks);
-
-        Stream<T> map = stream.flatMap(Collection::stream);
+        final Stream<List<T>> stream = ofStream();
+        final Stream<T> map = stream.flatMap(Collection::stream);
 
         if (useChunks) {
             map.forEachOrdered(consumer);
@@ -155,6 +160,15 @@ public class PocketContainer<T> implements Serializable {
         else {
             map.forEach(consumer);
         }
+    }
+
+    public Optional<T> getFirst() {
+        return ofStream().flatMap(Collection::stream).findFirst();
+    }
+
+    public <U> PocketContainer<U> map(Function<T, U> function) {
+        List<U> map = ofStream().flatMap(Collection::stream).map(function).collect(Collectors.toList());
+        return new PocketContainer<U>(new List[]{map}, useChunks);
     }
 
     @Override

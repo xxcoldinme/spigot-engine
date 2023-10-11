@@ -56,8 +56,7 @@ public class ProcessorExecutor {
     private void iterateContextLinks(PocketContainer<SpigotModuleProcessor<?, ?>> processors,
                                      Function<SpigotModuleProcessor<?, ?>, ProcessTransaction> processFunction) {
 
-        SpigotModuleProcessor<?, ?> current = Iterables
-                .getFirst(processors.getElements(), null);
+        SpigotModuleProcessor<?, ?> current = processors.getFirst().orElse(null);
 
         while (current != null) {
             ProcessTransaction transaction = processFunction.apply(current);

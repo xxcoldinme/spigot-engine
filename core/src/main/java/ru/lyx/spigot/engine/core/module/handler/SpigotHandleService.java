@@ -23,13 +23,7 @@ public class SpigotHandleService {
     private final ReflectionService reflectionService;
 
     private PocketContainer<SpigotHandler<?>> getTotalHandlers() {
-        final PocketContainer<PluginProperty<SpigotHandler<?>>> attachmentContainer
-                = container.getHandlers().getParent();
-        return PocketContainer.of(
-                attachmentContainer.getElements()
-                        .stream()
-                        .map(PluginProperty::getElement)
-                        .collect(Collectors.toList()));
+        return container.getHandlers().mapToBase(PluginProperty::getElement);
     }
 
     private PocketContainer<SpigotHandler<?>> getPluginHandlers(Plugin plugin) {
@@ -42,12 +36,7 @@ public class SpigotHandleService {
     }
 
     private PocketContainer<SpigotHandler<?>> getModuleHandlers(Class<? extends SpigotModule<?, ?>> cls) {
-        final List<SpigotHandler<?>> definitions = getTotalHandlers()
-                .getElements();
-        return PocketContainer.of(
-                definitions.stream()
-                        .filter(handler -> cls.equals(lookupParentModule(handler.getClass())))
-                        .toArray(SpigotHandler<?>[]::new));
+        return PocketContainer.of(getTotalHandlers().find(handler -> cls.equals(lookupParentModule(handler.getClass()))));
     }
 
     @SuppressWarnings("unchecked")

@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,6 +16,10 @@ import java.util.stream.Stream;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PocketPluginContainer<T> {
+
+    private static <T> PluginProperty<T> asProperty(Plugin plugin, T element) {
+        return new PluginProperty<>(plugin, element);
+    }
 
     public static <T> PocketPluginContainer<T> empty() {
         return new PocketPluginContainer<>();
@@ -56,7 +61,7 @@ public class PocketPluginContainer<T> {
     }
 
     public PocketPluginContainer<T> remove(Plugin plugin, T element) {
-        parent.remove(property(plugin, element));
+        parent.remove(asProperty(plugin, element));
         return this;
     }
 
@@ -66,7 +71,7 @@ public class PocketPluginContainer<T> {
     }
 
     public PocketPluginContainer<T> add(Plugin plugin, T element) {
-        parent.add(property(plugin, element));
+        parent.add(asProperty(plugin, element));
         return this;
     }
 
@@ -97,8 +102,16 @@ public class PocketPluginContainer<T> {
         return parent.findFirst(predicate);
     }
 
-    private PluginProperty<T> property(Plugin plugin, T element) {
-        return new PluginProperty<>(plugin, element);
+    public Optional<PluginProperty<T>> getFirst() {
+        return parent.getFirst();
+    }
+
+    public <U> PocketPluginContainer<U> mapToCurrent(Function<PluginProperty<T>, U> function) {
+        return new PocketPluginContainer<>(parent.map(property -> asProperty(property.getPlugin(), function.apply(property))));
+    }
+
+    public <U> PocketContainer<U> mapToBase(Function<PluginProperty<T>, U> function) {
+        return parent.map(function);
     }
 
     @Override

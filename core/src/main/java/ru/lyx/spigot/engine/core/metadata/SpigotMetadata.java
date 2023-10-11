@@ -5,13 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 
 import java.io.Serializable;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
 @ToString
@@ -54,10 +52,7 @@ public class SpigotMetadata implements Serializable {
                 .map(definition -> (T) definition.getValue());
     }
 
-    public Set<KeyProperty<?>> keys() {
-        return container.getElements()
-                .stream()
-                .map(MetadataProperty::getKey)
-                .collect(Collectors.toSet());
+    public PocketContainer<KeyProperty<?>> keys() {
+        return container.map(MetadataProperty::getKey);
     }
 }
