@@ -8,6 +8,7 @@ import ru.lyx.spigot.engine.core.module.handler.SpigotHandlerContext;
 import ru.lyx.spigot.engine.module.sync.SyncContext;
 import ru.lyx.spigot.engine.module.sync.SyncModule;
 import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
+import ru.lyx.spigot.engine.module.sync.transport.message.player.PlayerLevelingMessage;
 
 public class SyncMessageHandler implements SpigotHandler<SyncModule> {
 
@@ -21,10 +22,10 @@ public class SyncMessageHandler implements SpigotHandler<SyncModule> {
         SyncContext syncContext = context.getModule().getContext();
         TransportChannel channel = syncContext.getChannel();
 
-        channel.<TestSyncMessage>subscribe("levelChange", message -> {
+        channel.<PlayerLevelingMessage>subscribe("levelChange", message -> {
 
             String playerName = message.getPlayerName();
-            int newPlayerLevel = message.getNewPlayerLevel();
+            int newPlayerLevel = message.getNewLevel();
 
             Player player = Bukkit.getPlayer(playerName);
 

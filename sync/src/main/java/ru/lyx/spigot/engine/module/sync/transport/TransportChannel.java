@@ -1,6 +1,7 @@
 package ru.lyx.spigot.engine.module.sync.transport;
 
 import org.jetbrains.annotations.NotNull;
+import ru.lyx.spigot.engine.module.sync.transport.message.TransportMessage;
 
 /**
  * A channel used for transporting messages between

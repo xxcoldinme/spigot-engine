@@ -9,6 +9,7 @@ import ru.lyx.spigot.engine.core.reflection.ReflectionService;
 import ru.lyx.spigot.engine.module.sync.socket.SocketChannel;
 import ru.lyx.spigot.engine.module.sync.socket.SocketState;
 import ru.lyx.spigot.engine.module.sync.transport.*;
+import ru.lyx.spigot.engine.module.sync.transport.message.TransportMessage;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

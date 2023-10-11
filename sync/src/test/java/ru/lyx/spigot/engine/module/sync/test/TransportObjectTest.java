@@ -3,7 +3,7 @@ package ru.lyx.spigot.engine.module.sync.test;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import ru.lyx.spigot.engine.module.sync.transport.TransportManager;
-import ru.lyx.spigot.engine.module.sync.transport.TransportMessage;
+import ru.lyx.spigot.engine.module.sync.transport.message.TransportMessage;
 import ru.lyx.spigot.engine.module.sync.transport.TransportObject;
 import ru.lyx.spigot.engine.module.sync.util.GZipCompressor;
 

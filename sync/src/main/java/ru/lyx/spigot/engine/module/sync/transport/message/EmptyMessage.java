@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.module.sync.transport;
+package ru.lyx.spigot.engine.module.sync.transport.message;
 
 public class EmptyMessage implements TransportMessage {
 
