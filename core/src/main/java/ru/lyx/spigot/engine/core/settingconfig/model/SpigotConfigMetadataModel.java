@@ -2,7 +2,7 @@ package ru.lyx.spigot.engine.core.settingconfig.model;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.settingconfig.type.SettingProperty;
@@ -12,12 +12,12 @@ public abstract class SpigotConfigMetadataModel implements SpigotConfigModel {
     @Getter
     private final SpigotMetadata metadata = SpigotMetadata.create();
 
-    protected abstract AttachmentContainer<String> ofPaths();
+    protected abstract PocketContainer<String> ofPaths();
 
     @Override
     public final void initModel(SettingConfigModelContext context) {
-        final AttachmentContainer<String> propertiesContainer = ofPaths();
-        propertiesContainer.getDefinitions()
+        final PocketContainer<String> propertiesContainer = ofPaths();
+        propertiesContainer.getElements()
                 .forEach(path -> initKey(context, path));
     }
 

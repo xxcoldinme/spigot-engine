@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 import ru.lyx.spigot.engine.core.metadata.MetadataProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
@@ -15,11 +15,11 @@ import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProcessTransaction {
 
-    public static ProcessTransaction create(AttachmentContainer<SpigotModuleProcessor<?, ?>> attachmentContainer) {
+    public static ProcessTransaction create(PocketContainer<SpigotModuleProcessor<?, ?>> attachmentContainer) {
         return new ProcessTransaction(attachmentContainer, SpigotMetadata.create());
     }
 
-    private final AttachmentContainer<SpigotModuleProcessor<?, ?>> totalProcessors;
+    private final PocketContainer<SpigotModuleProcessor<?, ?>> totalProcessors;
     private final SpigotMetadata metadata;
 
     private LinkedProcessor next;

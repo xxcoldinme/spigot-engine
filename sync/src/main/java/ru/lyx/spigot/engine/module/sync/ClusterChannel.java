@@ -2,7 +2,7 @@ package ru.lyx.spigot.engine.module.sync;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.reflection.GetGenericTypeHandler;
 import ru.lyx.spigot.engine.core.reflection.ReflectionService;
@@ -22,7 +22,7 @@ public class ClusterChannel implements TransportChannel {
     private final TransportManager transportManager;
     private final SocketChannel socketChannel;
 
-    private final Map<String, AttachmentContainer<TransportConsumer<?>>> subscribedQueuesMap
+    private final Map<String, PocketContainer<TransportConsumer<?>>> subscribedQueuesMap
             = new ConcurrentHashMap<>();
 
     public void start() {
@@ -34,7 +34,7 @@ public class ClusterChannel implements TransportChannel {
     }
 
     private void subscribeQueue(@NotNull String queue, @NotNull TransportConsumer<?> consumer) {
-        subscribedQueuesMap.computeIfAbsent(queue, __ -> AttachmentContainer.empty())
+        subscribedQueuesMap.computeIfAbsent(queue, __ -> PocketContainer.empty())
                 .add(consumer);
     }
 
@@ -68,12 +68,12 @@ public class ClusterChannel implements TransportChannel {
         @Override
         public void accept(byte[] data) {
             final TransportObject transportObject = transportManager.fromData(data);
-            final AttachmentContainer<TransportConsumer<?>> consumers
+            final PocketContainer<TransportConsumer<?>> consumers
                     = subscribedQueuesMap.get(transportObject.getQueue());
 
             System.out.println("Consumers = " + consumers); // debugging for tests.
 
-            consumers.getDefinitions()
+            consumers.getElements()
                     .forEach(transportConsumer -> {
 
                         final TransportMessage message = transportObject.getMessage();

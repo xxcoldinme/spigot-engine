@@ -6,26 +6,26 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.attachment.SpigotAttachment;
-import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.plugin.PocketPluginContainer;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 
 @Getter
 @ToString
 public final class SpigotContainer {
 
-    private final PluginAttachmentContainer<SpigotAttachment> enablingHooks
-            = PluginAttachmentContainer.empty();
-    private final PluginAttachmentContainer<SpigotAttachment> disablingHooks
-            = PluginAttachmentContainer.empty();
+    private final PocketPluginContainer<SpigotAttachment> enablingHooks
+            = PocketPluginContainer.empty();
+    private final PocketPluginContainer<SpigotAttachment> disablingHooks
+            = PocketPluginContainer.empty();
 
-    private final PluginAttachmentContainer<SpigotHandler<?>> handlers = PluginAttachmentContainer.empty();
+    private final PocketPluginContainer<SpigotHandler<?>> handlers = PocketPluginContainer.empty();
 
-    private final AttachmentContainer<CommandExecutor> commands = AttachmentContainer.empty();
-    private final AttachmentContainer<Listener> listeners = AttachmentContainer.empty();
-    private final AttachmentContainer<Recipe> recipes = AttachmentContainer.empty();
-    private final AttachmentContainer<World> worlds = AttachmentContainer.empty();
+    private final PocketContainer<CommandExecutor> commands = PocketContainer.empty();
+    private final PocketContainer<Listener> listeners = PocketContainer.empty();
+    private final PocketContainer<Recipe> recipes = PocketContainer.empty();
+    private final PocketContainer<World> worlds = PocketContainer.empty();
 
     public synchronized void refill(@NotNull SpigotContainer container) {
         enablingHooks.setAll(container.getEnablingHooks());

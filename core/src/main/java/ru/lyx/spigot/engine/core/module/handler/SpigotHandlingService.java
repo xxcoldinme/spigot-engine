@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.plugin.Plugin;
 import ru.lyx.spigot.engine.core.SpigotContainer;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
-import ru.lyx.spigot.engine.core.attachment.plugin.PluginProperty;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.plugin.PluginProperty;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.core.reflection.GetGenericTypeHandler;
@@ -22,29 +22,29 @@ public class SpigotHandlingService {
     private final SpigotContainer container;
     private final ReflectionService reflectionService;
 
-    private AttachmentContainer<SpigotHandler<?>> getTotalHandlers() {
-        final AttachmentContainer<PluginProperty<SpigotHandler<?>>> attachmentContainer
+    private PocketContainer<SpigotHandler<?>> getTotalHandlers() {
+        final PocketContainer<PluginProperty<SpigotHandler<?>>> attachmentContainer
                 = container.getHandlers().getParent();
-        return AttachmentContainer.of(
-                attachmentContainer.getDefinitions()
+        return PocketContainer.of(
+                attachmentContainer.getElements()
                         .stream()
                         .map(PluginProperty::getDefinition)
                         .collect(Collectors.toList()));
     }
 
-    private AttachmentContainer<SpigotHandler<?>> getPluginHandlers(Plugin plugin) {
+    private PocketContainer<SpigotHandler<?>> getPluginHandlers(Plugin plugin) {
         final Collection<PluginProperty<SpigotHandler<?>>> collection = container.getHandlers()
                 .findByPlugin(plugin);
-        return AttachmentContainer.of(
+        return PocketContainer.of(
                 collection.stream()
                         .map(PluginProperty::getDefinition)
                         .collect(Collectors.toList()));
     }
 
-    private AttachmentContainer<SpigotHandler<?>> getModuleHandlers(Class<? extends SpigotModule<?, ?>> cls) {
+    private PocketContainer<SpigotHandler<?>> getModuleHandlers(Class<? extends SpigotModule<?, ?>> cls) {
         final List<SpigotHandler<?>> definitions = getTotalHandlers()
-                .getDefinitions();
-        return AttachmentContainer.of(
+                .getElements();
+        return PocketContainer.of(
                 definitions.stream()
                         .filter(handler -> cls.equals(lookupParentModule(handler.getClass())))
                         .toArray(SpigotHandler<?>[]::new));
@@ -62,8 +62,8 @@ public class SpigotHandlingService {
         }
     }
 
-    private void sendHandler(AttachmentContainer<SpigotHandler<?>> handlers, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
-        handlers.getDefinitions()
+    private void sendHandler(PocketContainer<SpigotHandler<?>> handlers, SpigotHandlingTrigger trigger, SpigotMetadata metadata) {
+        handlers.getElements()
                 .forEach(spigotModuleHandler -> sendHandlerGeneric(spigotModuleHandler, trigger, metadata));
     }
 

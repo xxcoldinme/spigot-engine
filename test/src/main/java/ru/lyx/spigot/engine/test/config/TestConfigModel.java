@@ -3,7 +3,7 @@ package ru.lyx.spigot.engine.test.config;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.settingconfig.model.SpigotConfigMetadataModel;
 
 @Getter
@@ -16,8 +16,8 @@ public class TestConfigModel extends SpigotConfigMetadataModel {
     public static final String LONG_PARAM_PATH = "ParamsToPrint.longParam";
 
     @Override
-    protected AttachmentContainer<String> ofPaths() {
-        return AttachmentContainer.of(STRING_PARAM_PATH, INT_PARAM_PATH,
+    protected PocketContainer<String> ofPaths() {
+        return PocketContainer.of(STRING_PARAM_PATH, INT_PARAM_PATH,
                 BOOL_PARAM_PATH, LONG_PARAM_PATH);
     }
 }

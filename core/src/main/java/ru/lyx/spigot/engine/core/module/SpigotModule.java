@@ -2,7 +2,7 @@ package ru.lyx.spigot.engine.core.module;
 
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.SpigotContext;
 import ru.lyx.spigot.engine.core.key.Keyable;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
@@ -19,7 +19,7 @@ public interface SpigotModule<T extends SpigotContext, M extends SpigotConfigMod
      * Initialization internal processors at container.
      * @param engine SpigotEngine instance.
      */
-    AttachmentContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine);
+    PocketContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine);
 
     /**
      * Pre initialization process handling.

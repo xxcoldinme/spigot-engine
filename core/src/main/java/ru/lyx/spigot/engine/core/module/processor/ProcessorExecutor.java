@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotContext;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
 import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
 
@@ -25,7 +25,7 @@ public class ProcessorExecutor {
     public <T extends SpigotModule<C, ?>, C extends SpigotContext> void execProcessors(@NotNull T module) {
         final C context = module.getContext();
 
-        final AttachmentContainer<SpigotModuleProcessor<?, ?>> processors
+        final PocketContainer<SpigotModuleProcessor<?, ?>> processors
                 = module.ofProcessors(engine);
 
         final AtomicReference<ProcessTransaction> transaction
@@ -53,11 +53,11 @@ public class ProcessorExecutor {
         transaction.set(processTransaction);
     }
 
-    private void iterateContextLinks(AttachmentContainer<SpigotModuleProcessor<?, ?>> processors,
+    private void iterateContextLinks(PocketContainer<SpigotModuleProcessor<?, ?>> processors,
                                      Function<SpigotModuleProcessor<?, ?>, ProcessTransaction> processFunction) {
 
         SpigotModuleProcessor<?, ?> current = Iterables
-                .getFirst(processors.getDefinitions(), null);
+                .getFirst(processors.getElements(), null);
 
         while (current != null) {
             ProcessTransaction transaction = processFunction.apply(current);

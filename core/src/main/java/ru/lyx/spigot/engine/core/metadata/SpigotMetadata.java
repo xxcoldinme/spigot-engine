@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 
 import java.util.Optional;
@@ -21,8 +21,8 @@ public class SpigotMetadata {
         return new SpigotMetadata();
     }
 
-    private final AttachmentContainer<MetadataProperty<?>> container
-            = AttachmentContainer.empty();
+    private final PocketContainer<MetadataProperty<?>> container
+            = PocketContainer.empty();
 
     public SpigotMetadata with(@NotNull MetadataProperty<?> property) {
         container.add(property);
@@ -54,7 +54,7 @@ public class SpigotMetadata {
     }
 
     public Set<KeyProperty<?>> keys() {
-        return container.getDefinitions()
+        return container.getElements()
                 .stream()
                 .map(MetadataProperty::getKey)
                 .collect(Collectors.toSet());

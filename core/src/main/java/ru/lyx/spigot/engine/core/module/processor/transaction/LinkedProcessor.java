@@ -3,7 +3,7 @@ package ru.lyx.spigot.engine.core.module.processor.transaction;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 import ru.lyx.spigot.engine.core.reflection.ConstructInstanceHandler;
@@ -23,8 +23,8 @@ public class LinkedProcessor {
                         .with(ConstructInstanceHandler.TARGET_CLASS, processorClass));
     }
 
-    public SpigotModuleProcessor<?, ?> lookupCached(AttachmentContainer<SpigotModuleProcessor<?, ?>> processors) {
-        return processors.getDefinitions()
+    public SpigotModuleProcessor<?, ?> lookupCached(PocketContainer<SpigotModuleProcessor<?, ?>> processors) {
+        return processors.getElements()
                 .stream()
                 .filter(processor -> processor.getClass().equals(processorClass))
                 .findFirst()

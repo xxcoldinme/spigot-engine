@@ -6,8 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotEngine;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
-import ru.lyx.spigot.engine.core.attachment.plugin.PluginAttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.plugin.PocketPluginContainer;
 import ru.lyx.spigot.engine.core.attachment.SpigotAttachment;
 import ru.lyx.spigot.engine.core.module.handler.SpigotHandler;
 
@@ -16,19 +16,19 @@ public abstract class SpigotBasePlugin
 
     @Override
     public final void registerPlugin(@NotNull SpigotEngine engine) {
-        final PluginAttachmentContainer<SpigotAttachment> enabledLinkAttachment
-                = PluginAttachmentContainer.<SpigotAttachment>empty()
+        final PocketPluginContainer<SpigotAttachment> enabledLinkAttachment
+                = PocketPluginContainer.<SpigotAttachment>empty()
                     .add(this, (pl) -> doEnable(engine));
 
-        final PluginAttachmentContainer<SpigotAttachment> disabledLinkAttachment
-                = PluginAttachmentContainer.<SpigotAttachment>empty()
+        final PocketPluginContainer<SpigotAttachment> disabledLinkAttachment
+                = PocketPluginContainer.<SpigotAttachment>empty()
                     .add(this, (pl) -> doDisable(engine));
 
-        final PluginAttachmentContainer<SpigotHandler<?>> handlersContainer = ofHandlers(engine);
-        final AttachmentContainer<Listener> listenersContainer = ofListeners(engine);
-        final AttachmentContainer<CommandExecutor> commandsContainer = ofCommands(engine);
-        final AttachmentContainer<Recipe> recipesContainer = ofRecipes(engine);
-        final AttachmentContainer<World> worldsContainer = ofWorlds(engine);
+        final PocketPluginContainer<SpigotHandler<?>> handlersContainer = ofHandlers(engine);
+        final PocketContainer<Listener> listenersContainer = ofListeners(engine);
+        final PocketContainer<CommandExecutor> commandsContainer = ofCommands(engine);
+        final PocketContainer<Recipe> recipesContainer = ofRecipes(engine);
+        final PocketContainer<World> worldsContainer = ofWorlds(engine);
 
         engine.doEditContainers()
                 .addHandlers(handlersContainer)
@@ -42,29 +42,29 @@ public abstract class SpigotBasePlugin
                 .toEngine();
     }
 
-    protected PluginAttachmentContainer<SpigotHandler<?>> ofHandlers(@NotNull SpigotEngine engine) {
+    protected PocketPluginContainer<SpigotHandler<?>> ofHandlers(@NotNull SpigotEngine engine) {
         // override me.
-        return PluginAttachmentContainer.empty();
+        return PocketPluginContainer.empty();
     }
 
-    protected AttachmentContainer<Listener> ofListeners(@NotNull SpigotEngine engine) {
+    protected PocketContainer<Listener> ofListeners(@NotNull SpigotEngine engine) {
         // override me.
-        return AttachmentContainer.empty();
+        return PocketContainer.empty();
     }
 
-    protected AttachmentContainer<CommandExecutor> ofCommands(@NotNull SpigotEngine engine) {
+    protected PocketContainer<CommandExecutor> ofCommands(@NotNull SpigotEngine engine) {
         // override me.
-        return AttachmentContainer.empty();
+        return PocketContainer.empty();
     }
 
-    protected AttachmentContainer<Recipe> ofRecipes(@NotNull SpigotEngine engine) {
+    protected PocketContainer<Recipe> ofRecipes(@NotNull SpigotEngine engine) {
         // override me.
-        return AttachmentContainer.empty();
+        return PocketContainer.empty();
     }
 
-    protected AttachmentContainer<World> ofWorlds(@NotNull SpigotEngine engine) {
+    protected PocketContainer<World> ofWorlds(@NotNull SpigotEngine engine) {
         // override me.
-        return AttachmentContainer.empty();
+        return PocketContainer.empty();
     }
 
     protected void doEnable(@NotNull SpigotEngine engine) {

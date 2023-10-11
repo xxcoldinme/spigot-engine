@@ -2,7 +2,7 @@ package ru.lyx.spigot.engine.core.settingconfig.model;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.settingconfig.SettingConfig;
 import ru.lyx.spigot.engine.core.settingconfig.type.SettingProperty;
 
@@ -14,8 +14,8 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public final class SettingConfigModelContext {
 
-    private final AttachmentContainer<ConfigContextProperty<?>> propertiesContainer
-            = AttachmentContainer.empty();
+    private final PocketContainer<ConfigContextProperty<?>> propertiesContainer
+            = PocketContainer.empty();
 
     private <F> void addProperty(String path, Function<SettingProperty, F> mapping, Consumer<F> setter) {
         propertiesContainer.add(new ConfigContextProperty<>(path, mapping, setter));
@@ -26,7 +26,7 @@ public final class SettingConfigModelContext {
     }
 
     public void apply(SettingConfig config) {
-        new ArrayList<>(propertiesContainer.getDefinitions())
+        new ArrayList<>(propertiesContainer.getElements())
                 .forEach(property -> applySetter(config, property));
     }
 

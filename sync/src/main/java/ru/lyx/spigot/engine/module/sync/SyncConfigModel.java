@@ -1,6 +1,6 @@
 package ru.lyx.spigot.engine.module.sync;
 
-import ru.lyx.spigot.engine.core.attachment.AttachmentContainer;
+import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.settingconfig.model.SpigotConfigMetadataModel;
 import ru.lyx.spigot.engine.core.settingconfig.type.SettingProperty;
 
@@ -16,8 +16,8 @@ public final class SyncConfigModel extends SpigotConfigMetadataModel {
     private static final String QUEUE_EXPIRE_TIME_IN_HOURS = "queue.expire_delay_hours";
 
     @Override
-    protected AttachmentContainer<String> ofPaths() {
-        return AttachmentContainer.of(HOST_NAME, CONNECT_TIMEOUT, HANDSHAKE_TIMEOUT,
+    protected PocketContainer<String> ofPaths() {
+        return PocketContainer.of(HOST_NAME, CONNECT_TIMEOUT, HANDSHAKE_TIMEOUT,
                 CLUSTER_PORT, QUEUE_EXPIRE_TIME_IN_HOURS);
     }
 
