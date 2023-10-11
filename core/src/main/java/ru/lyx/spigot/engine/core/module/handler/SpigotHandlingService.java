@@ -28,7 +28,7 @@ public class SpigotHandlingService {
         return PocketContainer.of(
                 attachmentContainer.getElements()
                         .stream()
-                        .map(PluginProperty::getDefinition)
+                        .map(PluginProperty::getElement)
                         .collect(Collectors.toList()));
     }
 
@@ -37,7 +37,7 @@ public class SpigotHandlingService {
                 .findByPlugin(plugin);
         return PocketContainer.of(
                 collection.stream()
-                        .map(PluginProperty::getDefinition)
+                        .map(PluginProperty::getElement)
                         .collect(Collectors.toList()));
     }
 
