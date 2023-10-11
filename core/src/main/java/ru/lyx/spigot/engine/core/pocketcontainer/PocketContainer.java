@@ -20,11 +20,11 @@ public class PocketContainer<T> implements Serializable {
     private static final int CHUNK_SIZE = Byte.MAX_VALUE;
 
     public static <T> PocketContainer<T> chunkify() {
-        return new PocketContainer<T>(new List[1], true);
+        return new PocketContainer<T>(new List[0], true);
     }
 
     public static <T> PocketContainer<T> empty() {
-        return new PocketContainer<T>(new List[1], false);
+        return new PocketContainer<T>(new List[0], false);
     }
 
     public static <T> PocketContainer<T> of(T... elements) {
@@ -69,7 +69,7 @@ public class PocketContainer<T> implements Serializable {
     }
 
     private List<T> insertChunk() {
-        if (!useChunks) {
+        if (!useChunks && chunks.length != 0) {
             return chunks[0];
         }
 
@@ -82,9 +82,7 @@ public class PocketContainer<T> implements Serializable {
     }
 
     private void ensureSize(int length) {
-        if (useChunks) {
-            chunks = Arrays.copyOfRange(chunks, 0, chunks.length + length);
-        }
+        chunks = Arrays.copyOfRange(chunks, 0, chunks.length + length);
     }
 
     private void cleanEmpties() {
@@ -111,10 +109,19 @@ public class PocketContainer<T> implements Serializable {
 
     public PocketContainer<T> addAll(PocketContainer<T> other) {
         List<T>[] otherChunks = other.chunks;
-        ensureSize(otherChunks.length);
 
-        for (int index = 1; index <= otherChunks.length; index++) {
-            chunks[chunks.length - index] = otherChunks[index - 1];
+        if (useChunks) {
+            ensureSize(otherChunks.length);
+
+            for (int index = 1; index <= otherChunks.length; index++) {
+                chunks[chunks.length - index] = otherChunks[index - 1];
+            }
+        } else {
+            for (List<T> chunk : otherChunks) {
+                for (T element : chunk) {
+                    add(element);
+                }
+            }
         }
 
         return this;
