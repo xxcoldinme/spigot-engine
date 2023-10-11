@@ -8,9 +8,7 @@ import ru.lyx.spigot.engine.core.module.Factory;
 import ru.lyx.spigot.engine.core.module.SpigotModuleFactory;
 import ru.lyx.spigot.engine.core.module.SpigotModuleTypes;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
-import ru.lyx.spigot.engine.module.sync.processor.CreateClusterChannelProcessor;
-import ru.lyx.spigot.engine.module.sync.processor.ClusterChannelInitProcessor;
-import ru.lyx.spigot.engine.module.sync.processor.ClusterChannelStartProcessor;
+import ru.lyx.spigot.engine.module.sync.processor.CreateChannelProcessor;
 
 public class SyncModule extends AbstractSpigotModule<SyncContext, SyncConfigModel> {
 
@@ -25,11 +23,7 @@ public class SyncModule extends AbstractSpigotModule<SyncContext, SyncConfigMode
 
     @Override
     public PocketContainer<SpigotModuleProcessor<?, ?>> ofProcessors(@NotNull SpigotEngine engine) {
-        return PocketContainer.of(
-                new CreateClusterChannelProcessor(),
-                new ClusterChannelStartProcessor(),
-                new ClusterChannelInitProcessor()
-        );
+        return PocketContainer.of(new CreateChannelProcessor());
     }
 
     @Override

@@ -24,5 +24,5 @@ public interface TransportChannel {
      * @param queue Name of cluster queue.
      * @param message Outgoing message.
      */
-    void sendMessage(@NotNull String queue, @NotNull TransportMessage message);
+    void broadcast(@NotNull String queue, @NotNull TransportMessage message);
 }

@@ -17,11 +17,10 @@ public class SyncContext implements SpigotContext {
     private final TransportManager transportManager;
 
     @Setter
-    @Getter
     private TransportChannel channel;
 
     public SyncContext() {
-        gZipCompressor = new GZipCompressor();
-        transportManager = new TransportManager(gZipCompressor);
+        this.gZipCompressor = new GZipCompressor();
+        this.transportManager = new TransportManager(gZipCompressor);
     }
 }

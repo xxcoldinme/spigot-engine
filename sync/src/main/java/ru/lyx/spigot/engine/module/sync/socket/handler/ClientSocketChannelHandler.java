@@ -10,11 +10,13 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
 
     private final ExecutorService executorService;
+    private final Logger logger;
 
     private byte[] exceptionallyBytes;
 
@@ -44,11 +46,19 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
         initSocket(config);
 
         if (socket == null) {
-            new ServerSocketChannelHandler(executorService)
+            if (config.isClusterDebugEnabled()) {
+                logger.info("Cluster client-socket has dropped, redirected to server");
+            }
+
+            new ServerSocketChannelHandler(executorService, logger)
                     .handleConnect(channel, config);
         } else {
             channel.setHandler(this);
             channel.setState(SocketState.ACTIVE);
+
+            if (config.isClusterDebugEnabled()) {
+                logger.info("Cluster client-socket state has changed to ACTIVE");
+            }
 
             // ForkJoinPool parallelism of tasks.
             executorService.submit(() -> super.handleAutoDisconnect(socket, channel));
@@ -64,6 +74,10 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     public void handleDataSending(SocketChannel channel, byte[] data) {
+        if (config.isClusterDebugEnabled()) {
+            logger.info("Cluster client-socket handle data sending");
+        }
+
         try {
             OutputStream outputStream = socket.getOutputStream();
             outputStream.write(data);
@@ -77,6 +91,8 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     protected void handleDisconnect(Socket socket, SocketChannel channel) {
+        logger.info("Cluster client-socket has dropped connection with server, try reconnect...");
+
         handleConnect(channel, config);
 
         if (exceptionallyBytes != null) {
@@ -88,6 +104,8 @@ public class ClientSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     protected void onDataReceived(Socket socket, SocketChannel channel, byte[] data) {
+        logger.info("Cluster client-socket handle data receiving");
+
         executorService.submit(() -> super.handleAutoDisconnect(socket, channel));
     }
 }

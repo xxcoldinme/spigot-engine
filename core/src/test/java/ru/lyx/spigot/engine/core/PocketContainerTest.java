@@ -22,7 +22,7 @@ public class PocketContainerTest {
 
     private static void test_grossCase() {
         PocketContainer<String> container = PocketContainer.chunkify();
-        container.addAll(Stream.generate(() -> RandomStringUtils.randomAlphanumeric(16, 20)).limit(10_000).toArray(String[]::new));
+        container.addAll(Stream.generate(() -> RandomStringUtils.randomAlphanumeric(16, 20)).limit(100_000).toArray(String[]::new));
 
         System.out.println(container.find(s -> s.contains("1")));
         System.out.println(container);

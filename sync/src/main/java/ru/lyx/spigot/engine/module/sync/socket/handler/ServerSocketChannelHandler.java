@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ru.lyx.spigot.engine.module.sync.SpigotSyncException;
 import ru.lyx.spigot.engine.module.sync.SyncConfigModel;
 import ru.lyx.spigot.engine.module.sync.socket.SocketChannel;
+import ru.lyx.spigot.engine.module.sync.socket.SocketState;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,11 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
 
     private final ExecutorService executorService;
+    private final Logger logger;
 
     private ServerSocket socket;
     private final List<Socket> incomingSocketsList = new CopyOnWriteArrayList<>();
@@ -29,21 +32,34 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
             socket.bind(config.getClusterAddress());
 
             channel.setHandler(this);
+            channel.setState(SocketState.ACTIVE);
 
-            handleIncomingSockets(channel);
+            handleIncomingSockets(channel, config);
+
+            if (config.isClusterDebugEnabled()) {
+                logger.info("Cluster server-socket state has changed to ACTIVE");
+            }
         }
         catch (IOException exception) {
-            new ClientSocketChannelHandler(executorService)
+            if (config.isClusterDebugEnabled()) {
+                logger.info("Cluster server-socket has dropped, redirected to client");
+            }
+
+            new ClientSocketChannelHandler(executorService, logger)
                     .handleConnect(channel, config);
         }
     }
 
-    private void handleIncomingSockets(SocketChannel channel) {
+    private void handleIncomingSockets(SocketChannel channel, SyncConfigModel config) {
         executorService.submit(() -> {
             try {
                 for ( ;; ) {
                     Socket incomingSocket = socket.accept();
                     incomingSocketsList.add(incomingSocket);
+
+                    if (config.isClusterDebugEnabled()) {
+                        logger.info("Cluster server-socket accepted new input connection: " + incomingSocket.getRemoteSocketAddress());
+                    }
 
                     // ForkJoinPool parallelism of tasks.
                     executorService.submit(() -> super.handleDataReceiving(incomingSocket, channel));
@@ -65,6 +81,8 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     public void handleDataSending(SocketChannel channel, byte[] data) {
+        logger.info("Cluster server-socket handle data sending");
+
         for (Socket socket : new ArrayList<>(incomingSocketsList)) {
             try {
                 OutputStream outputStream = socket.getOutputStream();
@@ -83,6 +101,8 @@ public class ServerSocketChannelHandler extends AbstractSocketChannelHandler {
 
     @Override
     protected void onDataReceived(Socket socket, SocketChannel channel, byte[] data) {
+        logger.info("Cluster server-socket handle data receiving");
+
         incomingSocketsList.remove(socket);
         handleDataSending(channel, data);
         incomingSocketsList.add(socket);

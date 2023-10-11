@@ -1,0 +1,5 @@
+package ru.lyx.spigot.engine.module.sync.test.node;
+
+// just run it
+public class Node_2 extends AbstractClusterNodeTest {
+}

@@ -5,20 +5,24 @@ import ru.lyx.spigot.engine.core.settingconfig.model.SpigotConfigMetadataModel;
 import ru.lyx.spigot.engine.core.settingconfig.type.SettingProperty;
 
 import java.net.InetSocketAddress;
-import java.util.concurrent.TimeUnit;
 
 public final class SyncConfigModel extends SpigotConfigMetadataModel {
 
+    private static final String SERVER_ID = "server.name";
     private static final String HOST_NAME = "connection.host";
     private static final String CONNECT_TIMEOUT = "connection.connect_timeout";
-    private static final String HANDSHAKE_TIMEOUT = "connection.handshake_timeout";
     private static final String CLUSTER_PORT = "cluster.port";
-    private static final String QUEUE_EXPIRE_TIME_IN_HOURS = "queue.expire_delay_hours";
+    private static final String CLUSTER_DEBUG_STATE = "cluster.debug";
 
     @Override
     protected PocketContainer<String> ofPaths() {
-        return PocketContainer.of(HOST_NAME, CONNECT_TIMEOUT, HANDSHAKE_TIMEOUT,
-                CLUSTER_PORT, QUEUE_EXPIRE_TIME_IN_HOURS);
+        return PocketContainer.of(SERVER_ID, HOST_NAME, CONNECT_TIMEOUT,
+                CLUSTER_PORT, CLUSTER_DEBUG_STATE);
+    }
+
+    public String getServerId() {
+        final SettingProperty property = getProperty(SERVER_ID);
+        return property.getValue();
     }
 
     public String getHostName() {
@@ -31,24 +35,17 @@ public final class SyncConfigModel extends SpigotConfigMetadataModel {
         return property.getValueAsInt();
     }
 
-    public int getHandshakeTimeout() {
-        final SettingProperty property = getProperty(HANDSHAKE_TIMEOUT);
-        return property.getValueAsInt();
-    }
-
     public int getClusterPort() {
         final SettingProperty property = getProperty(CLUSTER_PORT);
         return property.getValueAsInt();
     }
 
-    public long getQueueExpireTime(TimeUnit timeUnit) {
-        final SettingProperty property = getProperty(QUEUE_EXPIRE_TIME_IN_HOURS);
-        int valueAsInt = property.getValueAsInt();
-
-        return timeUnit.convert(valueAsInt, TimeUnit.HOURS);
-    }
-
     public InetSocketAddress getClusterAddress() {
         return new InetSocketAddress(getHostName(), getClusterPort());
+    }
+
+    public boolean isClusterDebugEnabled() {
+        final SettingProperty property = getProperty(CLUSTER_DEBUG_STATE);
+        return property.getValueAsBoolean();
     }
 }

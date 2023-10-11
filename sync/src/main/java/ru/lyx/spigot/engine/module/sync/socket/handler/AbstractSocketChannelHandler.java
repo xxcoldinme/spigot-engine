@@ -1,7 +1,8 @@
 package ru.lyx.spigot.engine.module.sync.socket.handler;
 
-import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import ru.lyx.spigot.engine.module.sync.SpigotSyncException;
+import ru.lyx.spigot.engine.module.sync.SyncConfigModel;
 import ru.lyx.spigot.engine.module.sync.socket.SocketChannel;
 import ru.lyx.spigot.engine.module.sync.socket.SocketState;
 
@@ -11,8 +12,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.logging.Logger;
 
-@RequiredArgsConstructor
 public abstract class AbstractSocketChannelHandler implements SocketChannelHandler {
 
     private SocketAddress sessionAddress;
@@ -49,6 +50,7 @@ public abstract class AbstractSocketChannelHandler implements SocketChannelHandl
         }
     }
 
+    @SneakyThrows
     protected void handleDataReceiving(Socket socket, SocketChannel channel) {
         try {
             InputStream inputStream = socket.getInputStream();

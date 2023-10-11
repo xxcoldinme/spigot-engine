@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.module.sync.test;
+package ru.lyx.spigot.engine.module.sync.test.transport;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
