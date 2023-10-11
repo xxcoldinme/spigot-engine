@@ -28,7 +28,7 @@ public class ServerWorldsWrappingProcessor implements SpigotModuleProcessor<Worl
                 .forEach(world -> {
 
                     WrappedWorld wrapper = worldContext.createWrapper(world);
-                    //worldContext.store(wrapper); todo
+                    worldContext.store(wrapper);
                 });
 
         return context.getPreviousTransaction();
