@@ -36,7 +36,7 @@ public abstract class AbstractSpigotModule<T extends SpigotContext, M extends Sp
     }
 
     @Override
-    public final M getConfigModel() {
+    public final M getConfig() {
         if (modelRef == null || modelRef.get() == null) {
             modelRef = new WeakReference<>(createConfigModel());
         }

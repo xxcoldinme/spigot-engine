@@ -3,7 +3,7 @@ package ru.lyx.spigot.engine.module.world.processor;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
-import ru.lyx.spigot.engine.core.module.processor.ProcessorContext;
+import ru.lyx.spigot.engine.core.module.processor.ProcessController;
 import ru.lyx.spigot.engine.core.module.processor.SpigotModuleProcessor;
 import ru.lyx.spigot.engine.core.module.processor.transaction.ProcessTransaction;
 import ru.lyx.spigot.engine.module.world.WorldContext;
@@ -20,9 +20,9 @@ public class ServerWorldsWrappingProcessor implements SpigotModuleProcessor<Worl
     }
 
     @Override
-    public ProcessTransaction process(@NotNull ProcessorContext<WorldModule, WorldContext> context) {
-        List<World> serverWorldsList = context.getEngine().getServer().getWorlds();
-        WorldContext worldContext = context.getModuleContext();
+    public ProcessTransaction process(@NotNull ProcessController<WorldModule, WorldContext> controller) {
+        List<World> serverWorldsList = controller.getEngine().getServer().getWorlds();
+        WorldContext worldContext = controller.getContext();
 
         serverWorldsList
                 .forEach(world -> {
@@ -31,6 +31,6 @@ public class ServerWorldsWrappingProcessor implements SpigotModuleProcessor<Worl
                     worldContext.store(wrapper);
                 });
 
-        return context.getPreviousTransaction();
+        return controller.getPreviousTransaction();
     }
 }

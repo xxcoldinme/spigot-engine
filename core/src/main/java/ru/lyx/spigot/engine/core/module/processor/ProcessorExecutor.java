@@ -44,12 +44,12 @@ public class ProcessorExecutor {
                          AtomicReference<ProcessTransaction> transaction,
                          SpigotModuleProcessor<?, ?> processor) {
 
-        final ProcessorContext<T, C> processorContext = new ProcessorContext<>(engine, module, context, transaction.get());
+        final ProcessController<T, C> controller = new ProcessController<>(engine, module, context, transaction.get());
         final SpigotModuleProcessor<T, C> castedProcessor = (SpigotModuleProcessor<T, C>) processor;
 
         logger.info(format("Module '%s' has processing '%s'", module.getKey(), processor.getKey()));
 
-        ProcessTransaction processTransaction = castedProcessor.process(processorContext);
+        ProcessTransaction processTransaction = castedProcessor.process(controller);
         transaction.set(processTransaction);
     }
 

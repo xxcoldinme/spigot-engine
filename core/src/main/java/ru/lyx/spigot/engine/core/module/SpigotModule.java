@@ -35,5 +35,5 @@ public interface SpigotModule<T extends SpigotContext, M extends SpigotConfigMod
     /**
      * @return The module .ini configuration model.
      */
-    M getConfigModel();
+    M getConfig();
 }

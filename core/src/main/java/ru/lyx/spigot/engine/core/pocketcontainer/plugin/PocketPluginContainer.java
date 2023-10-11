@@ -90,11 +90,11 @@ public class PocketPluginContainer<T> {
     }
 
     public Collection<PluginProperty<T>> find(@NotNull Predicate<PluginProperty<T>> predicate) {
-        return parent.getElements().stream().filter(predicate).collect(Collectors.toList());
+        return parent.find(predicate);
     }
 
     public Optional<PluginProperty<T>> findFirst(@NotNull Predicate<PluginProperty<T>> predicate) {
-        return parent.getElements().stream().filter(predicate).findFirst();
+        return parent.findFirst(predicate);
     }
 
     private PluginProperty<T> property(Plugin plugin, T element) {
@@ -103,6 +103,6 @@ public class PocketPluginContainer<T> {
 
     @Override
     public String toString() {
-        return parent.getElements().toString();
+        return parent.toString();
     }
 }

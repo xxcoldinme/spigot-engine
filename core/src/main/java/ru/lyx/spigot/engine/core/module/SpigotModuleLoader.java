@@ -41,7 +41,7 @@ public class SpigotModuleLoader {
 
     private void initModule(SpigotModule<?, ?> spigotModule) {
         spigotModule.init(engine);
-        loadModel(spigotModule.getKey(), spigotModule.getConfigModel());
+        loadModel(spigotModule.getKey(), spigotModule.getConfig());
 
         processorExecutor.execProcessors(spigotModule);
     }

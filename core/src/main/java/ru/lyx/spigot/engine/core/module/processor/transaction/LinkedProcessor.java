@@ -24,10 +24,7 @@ public class LinkedProcessor {
     }
 
     public SpigotModuleProcessor<?, ?> lookupCached(PocketContainer<SpigotModuleProcessor<?, ?>> processors) {
-        return processors.getElements()
-                .stream()
-                .filter(processor -> processor.getClass().equals(processorClass))
-                .findFirst()
+        return processors.findFirst(processor -> processor.getClass().equals(processorClass))
                 .orElseThrow(() -> new NullPointerException("next processor"));
     }
 }

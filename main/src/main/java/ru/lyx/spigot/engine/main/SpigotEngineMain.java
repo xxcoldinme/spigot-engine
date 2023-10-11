@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.lyx.spigot.engine.core.SpigotEngine;
 import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.module.SpigotModule;
-import ru.lyx.spigot.engine.module.sync.ClusterChannel;
+import ru.lyx.spigot.engine.module.sync.cluster.ClusterChannel;
 import ru.lyx.spigot.engine.module.sync.SyncModule;
 import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
 import ru.lyx.spigot.engine.module.world.WorldModule;
@@ -26,7 +26,7 @@ public final class SpigotEngineMain extends JavaPlugin {
         engine = new SpigotEngine(getServer(), getLogger());
         engine.initEngine();
 
-        TOTAL_MODULES.getElements().forEach(engine::registerModule);
+        TOTAL_MODULES.forEach(engine::registerModule);
     }
 
     @Override

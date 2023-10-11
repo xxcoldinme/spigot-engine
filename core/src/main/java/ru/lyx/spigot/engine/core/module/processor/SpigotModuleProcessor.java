@@ -16,8 +16,8 @@ public interface SpigotModuleProcessor<T extends SpigotModule<C, ?>, C extends S
     /**
      * Processing the module initialization part.
      *
-     * @param context Initialization context
+     * @param controller Initialization controller.
      * @return Initialization transaction.
      */
-    ProcessTransaction process(@NotNull ProcessorContext<T, C> context);
+    ProcessTransaction process(@NotNull ProcessController<T, C> controller);
 }

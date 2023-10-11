@@ -21,6 +21,6 @@ public class TestPlayerLevelChangedListener extends SpigotEngineListener {
         SyncModule syncModule = engine.lookupModule(SyncModule.class);
         TransportChannel channel = syncModule.getContext().getChannel();
 
-        channel.sendMessage("levelChange", new PlayerLevelingMessage(event));
+        channel.broadcast("levelChange", new PlayerLevelingMessage(event));
     }
 }

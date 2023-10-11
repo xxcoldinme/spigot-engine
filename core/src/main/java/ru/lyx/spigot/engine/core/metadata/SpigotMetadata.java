@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.lyx.spigot.engine.core.pocketcontainer.PocketContainer;
 import ru.lyx.spigot.engine.core.key.KeyProperty;
 
+import java.io.Serializable;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unchecked")
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SpigotMetadata {
+public class SpigotMetadata implements Serializable {
 
     public static SpigotMetadata create() {
         return new SpigotMetadata();

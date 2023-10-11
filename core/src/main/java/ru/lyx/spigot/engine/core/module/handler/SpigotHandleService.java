@@ -63,8 +63,8 @@ public class SpigotHandleService {
     }
 
     private void sendHandler(PocketContainer<SpigotHandler<?>> handlers, SpigotHandleTrigger trigger, SpigotMetadata metadata) {
-        handlers.getElements()
-                .forEach(spigotModuleHandler -> sendHandlerGeneric(spigotModuleHandler, trigger, metadata));
+        handlers.forEach(spigotModuleHandler ->
+                sendHandlerGeneric(spigotModuleHandler, trigger, metadata));
     }
 
     public void sendTotalHandler(SpigotHandleTrigger trigger, SpigotMetadata metadata) {

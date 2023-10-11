@@ -17,8 +17,7 @@ public abstract class SpigotConfigMetadataModel implements SpigotConfigModel {
     @Override
     public final void initModel(SettingConfigModelContext context) {
         final PocketContainer<String> propertiesContainer = ofPaths();
-        propertiesContainer.getElements()
-                .forEach(path -> initKey(context, path));
+        propertiesContainer.forEach(path -> initKey(context, path));
     }
 
     private void initKey(SettingConfigModelContext context, String path) {
