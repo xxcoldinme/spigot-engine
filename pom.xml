@@ -13,9 +13,6 @@
         <module>core</module>
         <module>test</module>
         <module>main</module>
-        <module>entity</module>
-        <module>event</module>
-        <module>recipe</module>
         <module>sync</module>
         <module>world</module>
     </modules>
