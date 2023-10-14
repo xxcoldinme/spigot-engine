@@ -1,9 +1,13 @@
 package ru.lyx.spigot.engine.module.world;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 import ru.lyx.spigot.engine.core.SpigotContext;
-import ru.lyx.spigot.engine.module.world.model.WorldProperties;
+import ru.lyx.spigot.engine.core.metadata.SpigotMetadata;
+import ru.lyx.spigot.engine.module.world.model.WrappedWorldProperties;
 import ru.lyx.spigot.engine.module.world.model.WrappedWorld;
 
 import java.util.HashMap;
@@ -30,7 +34,11 @@ public class WorldContext implements SpigotContext {
         wrappedWorldMap.put(name.toLowerCase(), wrappedWorld);
     }
 
-    public WorldProperties toProperties(World world) {
-        return new WorldProperties(); // todo
+    public WrappedWorldProperties toProperties(World world) {
+        GameMode defaultGameMode = Bukkit.getDefaultGameMode();
+        Difficulty difficulty = world.getDifficulty();
+
+        return new WrappedWorldProperties(defaultGameMode, difficulty,
+                SpigotMetadata.create());
     }
 }

@@ -12,7 +12,7 @@ import lombok.ToString;
 public class WrappedWorld {
 
     private final String name;
-    private final WorldProperties properties;
+    private final WrappedWorldProperties properties;
 
     public void clearAllEntities() {
         // todo
