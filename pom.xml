@@ -11,6 +11,7 @@
 
     <modules>
         <module>core</module>
+        <module>utils</module>
         <module>test</module>
         <module>main</module>
         <module>sync</module>

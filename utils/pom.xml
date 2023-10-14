@@ -8,8 +8,8 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>spigot-engine-core</artifactId>
     <modelVersion>4.0.0</modelVersion>
+    <artifactId>spigot-engine-utils</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -17,17 +17,4 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>ru.lyx</groupId>
-            <artifactId>spigot-engine-utils</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ini4j</groupId>
-            <artifactId>ini4j</artifactId>
-            <version>0.5.4</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 </project>
