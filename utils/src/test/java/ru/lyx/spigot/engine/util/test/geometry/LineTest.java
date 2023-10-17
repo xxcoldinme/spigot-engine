@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.util.test.math.geometry;
+package ru.lyx.spigot.engine.util.test.geometry;
 
 import ru.lyx.spigot.engine.util.geometry.GeometryGraph;
 import ru.lyx.spigot.engine.util.geometry.GeometryGraphProperty;
