@@ -1,8 +1,8 @@
 package ru.lyx.spigot.engine.util.test.math;
 
-import ru.lyx.spigot.engine.util.math.GuiSlot;
+import ru.lyx.spigot.engine.util.math.Slot;
 
-public class GuiSlotTest {
+public class SlotTest {
 
     /*
             GUI SLOTS MATRIX:
@@ -15,10 +15,10 @@ public class GuiSlotTest {
      */
 
     public static void main(String[] args) {
-        System.out.println(GuiSlot.asMatrix(1, 1)); // GuiSlot(slot=0, rowSize=9)
-        System.out.println(GuiSlot.asMatrix(2, 3)); // GuiSlot(slot=19, rowSize=9)
+        System.out.println(Slot.asMatrix(1, 1)); // GuiSlot(slot=0, rowSize=9)
+        System.out.println(Slot.asMatrix(2, 3)); // GuiSlot(slot=19, rowSize=9)
 
-        final GuiSlot slot_23 = GuiSlot.of(23);
+        final Slot slot_23 = Slot.of(23);
 
         System.out.println(slot_23.up()); // GuiSlot(slot=14, rowSize=9)
         System.out.println(slot_23.up(2)); // GuiSlot(slot=5, rowSize=9)
