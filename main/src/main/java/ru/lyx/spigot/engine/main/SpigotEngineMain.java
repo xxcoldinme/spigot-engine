@@ -10,6 +10,7 @@ import ru.lyx.spigot.engine.module.sync.cluster.ClusterChannel;
 import ru.lyx.spigot.engine.module.sync.SyncModule;
 import ru.lyx.spigot.engine.module.sync.transport.TransportChannel;
 import ru.lyx.spigot.engine.module.world.WorldModule;
+import ru.lyx.spigot.engine.util.SpigotEngineUtil;
 
 public final class SpigotEngineMain extends JavaPlugin {
 
@@ -31,6 +32,8 @@ public final class SpigotEngineMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        SpigotEngineUtil.registerUtils();
+
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new SpigotPluginListener(engine), this);
     }

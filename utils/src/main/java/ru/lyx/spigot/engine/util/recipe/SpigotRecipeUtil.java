@@ -11,20 +11,20 @@ import java.util.Set;
 @UtilityClass
 public final class SpigotRecipeUtil {
 
-    private final Set<WorkbenchRecipe> workbenchRecipeSet = new HashSet<>();
+    private final Set<WorkbenchRecipe> WORKBENCH_RECIPES = new HashSet<>();
 
     public void registerMinecraftRecipes() {
         Bukkit.recipeIterator().forEachRemaining(recipe -> {
 
             if (recipe instanceof ShapedRecipe) {
                 ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
-                workbenchRecipeSet.add(wrap(shapedRecipe));
+                WORKBENCH_RECIPES.add(wrap(shapedRecipe));
             }
         });
     }
 
     public void registerCustomRecipe(WorkbenchRecipe recipe) {
-        boolean add = workbenchRecipeSet.add(recipe);
+        boolean add = WORKBENCH_RECIPES.add(recipe);
         Preconditions.checkArgument(add, "Recipe already exists!");
     }
 
