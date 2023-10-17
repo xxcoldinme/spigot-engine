@@ -8,7 +8,7 @@ import ru.lyx.spigot.engine.util.SpigotUtilException;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuiSlot {
+public class Slot {
 
     private static final int DEFAULT_ROW_SIZE = 9;
 
@@ -33,86 +33,86 @@ public class GuiSlot {
         return DEFAULT_ROW_SIZE;
     }
 
-    public static GuiSlot first() {
-        return new GuiSlot(0, DEFAULT_ROW_SIZE);
+    public static Slot first() {
+        return new Slot(0, DEFAULT_ROW_SIZE);
     }
 
-    public static GuiSlot first(InventoryType inventoryType) {
-        return new GuiSlot(0, getRowSize(inventoryType));
+    public static Slot first(InventoryType inventoryType) {
+        return new Slot(0, getRowSize(inventoryType));
     }
 
-    public static GuiSlot of(int slot) {
-        return new GuiSlot(slot, DEFAULT_ROW_SIZE);
+    public static Slot of(int slot) {
+        return new Slot(slot, DEFAULT_ROW_SIZE);
     }
 
-    public static GuiSlot of(int slot, InventoryType inventoryType) {
-        return new GuiSlot(slot, getRowSize(inventoryType));
+    public static Slot of(int slot, InventoryType inventoryType) {
+        return new Slot(slot, getRowSize(inventoryType));
     }
 
-    public static GuiSlot asMatrix(int x, int y) {
-        return new GuiSlot((y - 1) * DEFAULT_ROW_SIZE + (x - 1), DEFAULT_ROW_SIZE);
+    public static Slot asMatrix(int x, int y) {
+        return new Slot((y - 1) * DEFAULT_ROW_SIZE + (x - 1), DEFAULT_ROW_SIZE);
     }
 
-    public static GuiSlot asMatrix(int x, int y, InventoryType inventoryType) {
+    public static Slot asMatrix(int x, int y, InventoryType inventoryType) {
         int rowSize = getRowSize(inventoryType);
-        return new GuiSlot((y - 1) * rowSize + (x - 1), rowSize);
+        return new Slot((y - 1) * rowSize + (x - 1), rowSize);
     }
 
     @Getter
     private int slot;
     private int rowSize;
 
-    public GuiSlot up(int mod) {
+    public Slot up(int mod) {
         return left(mod * rowSize);
     }
 
-    public GuiSlot up() {
+    public Slot up() {
         return up(1);
     }
 
-    public GuiSlot upToEdge() {
+    public Slot upToEdge() {
         return up(slot / rowSize);
     }
 
-    public GuiSlot down(int mod) {
+    public Slot down(int mod) {
         return right(mod * rowSize);
     }
 
-    public GuiSlot down() {
+    public Slot down() {
         return down(1);
     }
 
-    public GuiSlot left(int mod) {
+    public Slot left(int mod) {
         int left = (slot - mod);
         if (left <= 0) {
             throw new SpigotUtilException("Slot cannot to be left move at " + mod + " times");
         }
 
-        return new GuiSlot(left, rowSize);
+        return new Slot(left, rowSize);
     }
 
-    public GuiSlot left() {
+    public Slot left() {
         return left(1);
     }
 
-    public GuiSlot leftToEdge() {
+    public Slot leftToEdge() {
         return left(slot % rowSize);
     }
 
-    public GuiSlot right(int mod) {
+    public Slot right(int mod) {
         int right = (slot + mod);
         if (right <= 0) {
             throw new SpigotUtilException("Slot cannot to be right move at " + mod + " times");
         }
 
-        return new GuiSlot(right, rowSize);
+        return new Slot(right, rowSize);
     }
 
-    public GuiSlot right() {
+    public Slot right() {
         return right(1);
     }
 
-    public GuiSlot rightToEdge() {
+    public Slot rightToEdge() {
         return right((((slot - (slot % rowSize)) + rowSize) - slot) - 1);
     }
 }
