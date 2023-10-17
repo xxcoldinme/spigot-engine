@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @UtilityClass
-public final class RecipesUtils {
+public final class SpigotRecipeUtil {
 
     private final Set<WorkbenchRecipe> workbenchRecipeSet = new HashSet<>();
 
