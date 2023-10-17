@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.util.math.geometry.type;
+package ru.lyx.spigot.engine.util.geometry.type;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import ru.lyx.spigot.engine.util.math.VectorUtils;
-import ru.lyx.spigot.engine.util.math.geometry.GeometryGraph;
-import ru.lyx.spigot.engine.util.math.geometry.GeometryGraphProperty;
+import ru.lyx.spigot.engine.util.math.VectorUtil;
+import ru.lyx.spigot.engine.util.geometry.GeometryGraph;
+import ru.lyx.spigot.engine.util.geometry.GeometryGraphProperty;
 
 import java.util.Set;
 import java.util.function.Consumer;
@@ -30,6 +30,6 @@ public abstract class AbstractGeometryGraph implements GeometryGraph {
     @Override
     public final void apply(Location center, Consumer<Location> pointHandler) {
         offsets.forEach(vectorOffset -> pointHandler.accept(
-                VectorUtils.applyOffset(center, vectorOffset)));
+                VectorUtil.applyOffset(center, vectorOffset)));
     }
 }

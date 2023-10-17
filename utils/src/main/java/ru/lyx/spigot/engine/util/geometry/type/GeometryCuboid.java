@@ -1,14 +1,14 @@
-package ru.lyx.spigot.engine.util.math.geometry.type;
+package ru.lyx.spigot.engine.util.geometry.type;
 
 import org.bukkit.util.Vector;
-import ru.lyx.spigot.engine.util.math.geometry.GeometryGraphProperty;
+import ru.lyx.spigot.engine.util.geometry.GeometryGraphProperty;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Cuboid extends AbstractGeometryGraph {
+public class GeometryCuboid extends AbstractGeometryGraph {
 
-    public Cuboid(GeometryGraphProperty property) {
+    public GeometryCuboid(GeometryGraphProperty property) {
         super(property);
     }
 
@@ -18,8 +18,8 @@ public class Cuboid extends AbstractGeometryGraph {
 
         double spacing = property.getPointSpacing().getSpace();
 
-        float rotateX = property.getRotation().getX();
-        float rotateY = property.getRotation().getY();
+        double rotateX = Math.toRadians(property.getRotation().getX());
+        double rotateY = Math.toRadians(property.getRotation().getY());
 
         double sizeX = property.getSize().getX();
         double sizeY = property.getSize().getY();

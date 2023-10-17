@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.util.math.geometry;
+package ru.lyx.spigot.engine.util.geometry;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

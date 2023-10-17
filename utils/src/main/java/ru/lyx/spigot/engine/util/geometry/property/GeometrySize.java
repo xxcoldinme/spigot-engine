@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.util.math.geometry.property;
+package ru.lyx.spigot.engine.util.geometry.property;
 
 import lombok.ToString;
 import lombok.Value;
