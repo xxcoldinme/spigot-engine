@@ -3,7 +3,6 @@ package ru.lyx.spigot.engine.util.test.geometry;
 import org.bukkit.Location;
 import ru.lyx.spigot.engine.util.math.geometry.Geometry;
 import ru.lyx.spigot.engine.util.math.geometry.GeometryProperty;
-import ru.lyx.spigot.engine.util.math.geometry.GeometryView;
 import ru.lyx.spigot.engine.util.math.geometry.graph.GeometryGraph;
 
 public class CuboidTest {
@@ -22,7 +21,9 @@ public class CuboidTest {
         GeometryGraph cuboid = Geometry.of(location, property)
                 .createCube();
 
-        GeometryView view = cuboid.getView();
-        view.stream().map(Location::toVector).forEach(System.out::println);
+        cuboid.getView()
+                .stream()
+                .map(Location::toVector)
+                .forEach(System.out::println);
     }
 }
