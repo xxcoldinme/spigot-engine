@@ -1,23 +1,28 @@
 package ru.lyx.spigot.engine.util.test.geometry;
 
-import ru.lyx.spigot.engine.util.geometry.GeometryGraph;
-import ru.lyx.spigot.engine.util.geometry.GeometryGraphProperty;
-import ru.lyx.spigot.engine.util.geometry.SpigotGeometryFactory;
-import ru.lyx.spigot.engine.util.geometry.property.GeometryLength;
-import ru.lyx.spigot.engine.util.geometry.property.GeometryRotation;
+import org.bukkit.Location;
+import ru.lyx.spigot.engine.util.math.geometry.Geometry;
+import ru.lyx.spigot.engine.util.math.geometry.GeometryProperty;
+import ru.lyx.spigot.engine.util.math.geometry.GeometryView;
+import ru.lyx.spigot.engine.util.math.geometry.graph.GeometryGraph;
 
 public class LineTest {
 
     public static void main(String[] args) {
-        GeometryGraphProperty graphProperty = GeometryGraphProperty.newBuilder()
-                .setRotation(GeometryRotation.of(1f, 2.56f))
-                .setLength(GeometryLength.of(25))
+        GeometryProperty property = GeometryProperty.builder()
+                .rotationX(1f)
+                .rotationY(2.56f)
+                .pointsSpace(0.1)
+                .sizeX(25)
                 .build();
 
-        System.out.println(graphProperty);
+        System.out.println(property);
 
-        GeometryGraph line = SpigotGeometryFactory.createLine(graphProperty);
-        System.out.println(line.getOffsets());
-        System.out.println(line.getOffsets().size());
+        Location location = new Location(null, 45, 3, -901);
+        GeometryGraph cuboid = Geometry.of(location, property).createLine();
+
+        GeometryView view = cuboid.getView();
+
+        view.handleView(location1 -> System.out.println(location1.toVector()));
     }
 }

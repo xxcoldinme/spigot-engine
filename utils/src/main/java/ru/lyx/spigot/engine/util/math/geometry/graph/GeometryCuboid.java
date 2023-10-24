@@ -1,29 +1,29 @@
-package ru.lyx.spigot.engine.util.geometry.type;
+package ru.lyx.spigot.engine.util.math.geometry.graph;
 
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import ru.lyx.spigot.engine.util.geometry.GeometryGraphProperty;
+import ru.lyx.spigot.engine.util.math.geometry.GeometryProperty;
 
-import java.util.HashSet;
 import java.util.Set;
 
-public class GeometryCuboid extends AbstractGeometryGraph {
+public class GeometryCuboid extends GeometryGraphAdapter {
 
-    public GeometryCuboid(GeometryGraphProperty property) {
-        super(property);
+    public GeometryCuboid(Location middle, GeometryProperty property) {
+        super(middle, property);
     }
 
     @Override
-    protected Set<Vector> createOffsets(GeometryGraphProperty property) {
-        Set<Vector> offsets = new HashSet<>();
+    public Set<Vector> initOffsets(GeometryProperty property) {
+        Set<Vector> offsets = newOffsetsSet();
 
-        double spacing = property.getPointSpacing().getSpace();
+        double spacing = property.getPointsSpace();
 
-        double rotateX = Math.toRadians(property.getRotation().getX());
-        double rotateY = Math.toRadians(property.getRotation().getY());
+        double rotateX = Math.toRadians(property.getRotationX());
+        double rotateY = Math.toRadians(property.getRotationY());
 
-        double sizeX = property.getSize().getX();
-        double sizeY = property.getSize().getY();
-        double sizeZ = property.getSize().getZ();
+        double sizeX = property.getSizeX();
+        double sizeY = property.getSizeY();
+        double sizeZ = property.getSizeZ();
 
         for (double x = -sizeX / 2.0; x <= sizeX / 2.0; x += spacing) {
             for (double y = -sizeY / 2.0; y <= sizeY / 2.0; y += spacing) {

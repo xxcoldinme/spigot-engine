@@ -1,4 +1,4 @@
-package ru.lyx.spigot.engine.util.math;
+package ru.lyx.spigot.engine.util.math.gui;
 
 import lombok.*;
 import org.bukkit.event.inventory.InventoryType;

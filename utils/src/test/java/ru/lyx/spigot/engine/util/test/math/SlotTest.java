@@ -1,6 +1,6 @@
 package ru.lyx.spigot.engine.util.test.math;
 
-import ru.lyx.spigot.engine.util.math.Slot;
+import ru.lyx.spigot.engine.util.math.gui.Slot;
 
 public class SlotTest {
 
