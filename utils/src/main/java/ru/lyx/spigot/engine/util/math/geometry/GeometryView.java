@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class GeometryView {
@@ -19,14 +20,12 @@ public class GeometryView {
     private final Location center;
     private final Set<Vector> offsets;
     
-    public void handleView(Consumer<Location> pointHandler) {
-        if (pointHandler != null) {
-            offsets.forEach(vector -> pointHandler.accept(center.clone().add(vector)));
-        }
+    public Stream<Location> stream() {
+        return offsets.stream().map(center.clone()::add);
     }
 
     public <T> void spawnParticles(Particle particle, int particlesCount, T data) {
-        handleView(location -> location.getWorld().spawnParticle(particle, location, particlesCount, 0, 0, 0, 0, data));
+        stream().forEach(location -> location.getWorld().spawnParticle(particle, location, particlesCount, 0, 0, 0, 0, data));
     }
 
     public <T> void spawnParticles(Particle particle, T data) {
@@ -42,7 +41,7 @@ public class GeometryView {
     }
 
     public <T> void spawnParticles(Function<Location, Particle> particleFactory, int particlesCount, T data) {
-        handleView(location -> location.getWorld().spawnParticle(particleFactory.apply(location), location, particlesCount, 0, 0, 0, 0, data));
+        stream().forEach(location -> location.getWorld().spawnParticle(particleFactory.apply(location), location, particlesCount, 0, 0, 0, 0, data));
     }
 
     public <T> void spawnParticles(Function<Location, Particle> particleFactory, T data) {
@@ -58,20 +57,20 @@ public class GeometryView {
     }
 
     public void dropItemsNaturally(Location center, ItemStack itemStack) {
-        handleView(location -> location.getWorld().dropItemNaturally(location, itemStack));
+        stream().forEach(location -> location.getWorld().dropItemNaturally(location, itemStack));
     }
 
     public void dropItemsNaturallyRandom(Location center, List<ItemStack> itemStacks) {
         final ThreadLocalRandom random = ThreadLocalRandom.current();
-        handleView(location -> location.getWorld().dropItemNaturally(location,
+        stream().forEach(location -> location.getWorld().dropItemNaturally(location,
                 itemStacks.get(random.nextInt(1, itemStacks.size()) - 1)));
     }
 
     public void dropItemsNaturallyRandom(Location center, Function<Location, ItemStack> itemFactory) {
-        handleView(location -> location.getWorld().dropItemNaturally(location, itemFactory.apply(location)));
+        stream().forEach(location -> location.getWorld().dropItemNaturally(location, itemFactory.apply(location)));
     }
 
     public void spawnEntities(Location center, EntityType entityType) {
-        handleView(location -> location.getWorld().spawnEntity(location, entityType));
+        stream().forEach(location -> location.getWorld().spawnEntity(location, entityType));
     }
 }

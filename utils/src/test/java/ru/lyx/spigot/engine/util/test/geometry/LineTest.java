@@ -19,10 +19,10 @@ public class LineTest {
         System.out.println(property);
 
         Location location = new Location(null, 45, 3, -901);
-        GeometryGraph cuboid = Geometry.of(location, property).createLine();
+        GeometryGraph line = Geometry.of(location, property)
+                .createLine();
 
-        GeometryView view = cuboid.getView();
-
-        view.handleView(location1 -> System.out.println(location1.toVector()));
+        GeometryView view = line.getView();
+        view.stream().map(Location::toVector).forEach(System.out::println);
     }
 }

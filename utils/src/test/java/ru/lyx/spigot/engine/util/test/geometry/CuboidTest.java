@@ -19,10 +19,10 @@ public class CuboidTest {
         System.out.println(property);
 
         Location location = new Location(null, 45, 3, -901);
-        GeometryGraph cuboid = Geometry.of(location, property).createCube();
+        GeometryGraph cuboid = Geometry.of(location, property)
+                .createCube();
 
         GeometryView view = cuboid.getView();
-
-        view.handleView(location1 -> System.out.println(location1.toVector()));
+        view.stream().map(Location::toVector).forEach(System.out::println);
     }
 }
