@@ -10,7 +10,6 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -56,21 +55,21 @@ public class GeometryView {
         spawnParticles(particleFactory, 1, null);
     }
 
-    public void dropItemsNaturally(Location center, ItemStack itemStack) {
+    public void dropItemsNaturally(ItemStack itemStack) {
         stream().forEach(location -> location.getWorld().dropItemNaturally(location, itemStack));
     }
 
-    public void dropItemsNaturallyRandom(Location center, List<ItemStack> itemStacks) {
+    public void dropItemsNaturallyRandom(List<ItemStack> itemStacks) {
         final ThreadLocalRandom random = ThreadLocalRandom.current();
         stream().forEach(location -> location.getWorld().dropItemNaturally(location,
                 itemStacks.get(random.nextInt(1, itemStacks.size()) - 1)));
     }
 
-    public void dropItemsNaturallyRandom(Location center, Function<Location, ItemStack> itemFactory) {
+    public void dropItemsNaturallyRandom(Function<Location, ItemStack> itemFactory) {
         stream().forEach(location -> location.getWorld().dropItemNaturally(location, itemFactory.apply(location)));
     }
 
-    public void spawnEntities(Location center, EntityType entityType) {
+    public void spawnEntities(EntityType entityType) {
         stream().forEach(location -> location.getWorld().spawnEntity(location, entityType));
     }
 }
